@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroGraph — 個人化占星 Excel 工作簿</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0e1628;
+      color: #e8e0d0;
+      font-family: 'EB Garamond', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: #0b1020;
+      padding: 64px 32px 52px;
+      text-align: center;
+      border-bottom: 1px solid #C9A84C33;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 12% 18%, #C9A84C77 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 12%, #ffffff55 0%, transparent 100%),
+        radial-gradient(1px 1px at 43% 58%, #ffffff33 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 63% 32%, #C9A84C44 0%, transparent 100%),
+        radial-gradient(1px 1px at 23% 72%, #ffffff22 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 52%, #ffffff33 0%, transparent 100%),
+        radial-gradient(1px 1px at 8%  42%, #C9A84C33 0%, transparent 100%),
+        radial-gradient(1px 1px at 52% 82%, #ffffff22 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 28%, #ffffff44 0%, transparent 100%),
+        radial-gradient(1px 1px at 95% 78%, #C9A84C33 0%, transparent 100%);
+    }
+
+    .hero-inner { position: relative; }
+
+    .shop-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      color: #C9A84C;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: #f0e8d8;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: #C9A84Ccc;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 32px;
+      background: transparent;
+      border: 1px solid #C9A84C;
+      color: #C9A84C;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #C9A84C18; }
+
+    /* ── Intent ── */
+    .intent {
+      background: #111828;
+      padding: 48px 32px;
+      border-bottom: 1px solid #2E408044;
+    }
+
+    .intent-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #C9A84C88;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .intent-text {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.95;
+      color: #a8b8cc;
+      text-align: justify;
+    }
+
+    .intent-text em {
+      color: #c8d4e4;
+      font-style: normal;
+    }
+
+    /* ── Section ── */
+    .section {
+      padding: 48px 24px 56px;
+    }
+    .section:nth-of-type(odd)  { background: #0f1726; }
+    .section:nth-of-type(even) { background: #111828; }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 680px;
+      margin: 0 auto 8px;
+    }
+    .cat-line { flex: 1; height: 1px; background: #2E408066; }
+    .cat-title {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      color: #C9A84C;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .cat-zh {
+      font-size: 13px;
+      color: #6878a0;
+      text-align: center;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #1A2744;
+      border: 1px solid #2E408088;
+      border-radius: 3px;
+      padding: 22px 18px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: #C9A84C;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .card:hover { border-color: #C9A84C66; background: #1e2e55; }
+    .card:hover::after { opacity: 1; }
+
+    .card-icon { font-size: 22px; margin-bottom: 12px; opacity: 0.75; }
+
+    .card-zh {
+      font-size: 12px;
+      color: #C9A84Caa;
+      margin-bottom: 6px;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .card-en {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      color: #c0cce0;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: #5a6880;
+      line-height: 1.7;
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: #C9A84C77;
+      border: 1px solid #C9A84C22;
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-family: 'Cinzel', serif;
+    }
+
+    /* ── Placeholder ── */
+    .placeholder {
+      max-width: 680px;
+      margin: 0 auto 28px;
+      padding: 20px;
+      border: 1px dashed #2E408055;
+      border-radius: 3px;
+      text-align: center;
+      font-size: 13px;
+      color: #3a4860;
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #080e1a;
+      border-top: 1px solid #1A274466;
+      padding: 32px;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      color: #C9A84C88;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+    .footer-note {
+      font-size: 11px;
+      color: #2e3e58;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="stars"></div>
+    <div class="hero-inner">
+      <p class="shop-label">AstroGraph · Etsy Shop</p>
+      <h1 class="hero-title">個人化占星 Excel 工作簿</h1>
+      <p class="hero-sub">Personalized Western Astrology Workbooks</p>
+      <a class="btn" href="https://www.etsy.com/shop/VBAstroCharts" target="_blank">前往 Etsy 商店 ↗</a>
+    </div>
+  </header>
+
+  <!-- Design Intent -->
+  <section class="intent">
+    <p class="intent-label">Design Intent · 設計初衷</p>
+    <p class="intent-text">
+      占星書裡的相位描述生動，但對照自己的生命歷程卻不容易。傳統圓形行運圖適合捕捉當下，但不易拼出<em>慢速外行星的完整時間線</em>。甘特圖式排版能把長週期啟動、一生僅一次的轉折，以及相位從進入容許度、精確到離開的完整生命週期清楚呈現。選擇 Excel 而非 App，是因為資料可以篩選、排序、標註、列印，不受訂閱制或平台存廢影響。
+    </p>
+  </section>
+
+  <!-- Transit Gantt -->
+  <section class="section">
+    <div class="cat-header">
+      <div class="cat-line"></div>
+      <div class="cat-title">Transit Gantt Charts</div>
+      <div class="cat-line"></div>
+    </div>
+    <p class="cat-zh">行運甘特圖</p>
+
+    <div class="grid">
+      <a class="card" href="#" target="_blank">
+        <div class="card-icon">☿</div>
+        <div class="card-zh">年度行運 ✦ 四視角甘特圖</div>
+        <div class="card-en">Annual Transits<br>Four-Perspective Gantt</div>
+        <div class="card-desc">5 / 10 / 15-year packages. Four interpretive angles in one workbook.</div>
+        <span class="card-tag">Annual · 4 Views</span>
+      </a>
+
+      <a class="card" href="#" target="_blank">
+        <div class="card-icon">♄</div>
+        <div class="card-zh">本命視角 ✦ 百年行運甘特圖</div>
+        <div class="card-en">Natal Perspective<br>Century Transit Gantt</div>
+        <div class="card-desc">100 years of transits mapped against your natal chart.</div>
+        <span class="card-tag">100 Yrs · Natal</span>
+      </a>
+
+      <a class="card" href="#" target="_blank">
+        <div class="card-icon">♅</div>
+        <div class="card-zh">行運外行星視角 ✦ 百年甘特圖</div>
+        <div class="card-en">Outer Planet Transits<br>Century Gantt Chart</div>
+        <div class="card-desc">Jupiter through Pluto — generational cycles across a century.</div>
+        <span class="card-tag">100 Yrs · Outer</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Solar Return -->
+  <section class="section">
+    <div class="cat-header">
+      <div class="cat-line"></div>
+      <div class="cat-title">Solar Return Series</div>
+      <div class="cat-line"></div>
+    </div>
+    <p class="cat-zh">太陽回歸系列</p>
+
+    <div class="placeholder">設計初衷文字待補</div>
+
+    <div class="grid">
+      <a class="card" href="#" target="_blank">
+        <div class="card-icon">☀</div>
+        <div class="card-zh">太陽回歸 ✦ 百年資料庫</div>
+        <div class="card-en">Solar Return<br>Century Database</div>
+        <div class="card-desc">100 solar return charts with full planetary &amp; cusp data.</div>
+        <span class="card-tag">100 Yrs · SR</span>
+      </a>
+
+      <a class="card" href="#" target="_blank">
+        <div class="card-icon">☽</div>
+        <div class="card-zh">百年太陽回歸 × 本命相位總覽</div>
+        <div class="card-en">Solar Return × Natal<br>Aspects Overview</div>
+        <div class="card-desc">SR–natal aspect analysis across 100 years in one view.</div>
+        <span class="card-tag">100 Yrs · Aspects</span>
+      </a>
+
+      <a class="card" href="#" target="_blank">
+        <div class="card-icon">★</div>
+        <div class="card-zh">太陽回歸 ✦ 相位總覽</div>
+        <div class="card-en">Solar Return<br>Aspects Overview</div>
+        <div class="card-desc">Internal SR aspects — conjunctions, harmonics, and challenges.</div>
+        <span class="card-tag">SR · Aspects</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="footer-brand">AstroGraph</p>
+    <p class="footer-note">Excel · VBA · Western Astrology · Placidus · Tropical</p>
+  </footer>
+
+</body>
+</html>
