@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroGraph — 個人化占星 Excel 工作簿</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #EBEEF5; color: #1a2340; font-family: 'EB Garamond', Georgia, serif; min-height: 100vh; }
+
+    /* ── Hero ── */
+    .hero { background: #0b1020; padding: 64px 32px 52px; text-align: center; border-bottom: 1px solid #C9A84C44; position: relative; overflow: hidden; }
+    #starCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; }
+    .shop-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 16px; }
+    .hero-title { font-family: 'Cinzel', serif; font-size: 36px; font-weight: 600; color: #f0e8d8; margin-bottom: 10px; }
+    .hero-sub { font-size: 16px; color: #C9A84Ccc; margin-bottom: 32px; }
+    .btn { display: inline-block; padding: 11px 32px; background: transparent; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+    .btn:hover { background: #C9A84C18; }
+
+    /* ── Intent ── */
+    .intent { background: #dde2ee; padding: 48px 32px; border-bottom: 1px solid #b0b8d066; }
+    .intent-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #7888a0; text-transform: uppercase; text-align: center; margin-bottom: 24px; }
+    .intent-text { max-width: 600px; margin: 0 auto; font-size: 16px; line-height: 1.95; color: #1e2d4a; text-align: justify; }
+
+    /* ── Sections ── */
+    .section { padding: 48px 24px 56px; }
+    .section:nth-of-type(odd)  { background: #EBEEF5; }
+    .section:nth-of-type(even) { background: #dde2ee; }
+    .cat-header { display: flex; align-items: center; gap: 16px; max-width: 720px; margin: 0 auto 8px; }
+    .cat-line  { flex: 1; height: 1px; background: #b0b8d0; }
+    .cat-title { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2.5px; color: #8B6914; text-transform: uppercase; white-space: nowrap; }
+    .cat-zh    { font-size: 13px; color: #4a5878; text-align: center; margin-bottom: 24px; }
+    .cat-desc-block { max-width: 720px; margin: 0 auto 32px; font-size: 15px; line-height: 1.9; color: #1e2d4a; text-align: justify; padding: 0 4px; }
+
+    /* ── Grid & Cards ── */
+    .grid      { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 720px; margin: 0 auto; }
+    .grid-2col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 720px; margin: 0 auto; }
+
+    .card { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 3px; padding: 22px 18px; position: relative; overflow: hidden; transition: border-color .2s, background .2s; }
+    .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #C9A84C; opacity: 0; transition: opacity .2s; }
+    .card:hover { border-color: #C9A84C99; background: #eef0f8; }
+    .card:hover::after { opacity: 1; }
+    .card-icon { font-size: 22px; margin-bottom: 12px; opacity: .75; }
+    .card-zh   { font-size: 12px; color: #8B6914; margin-bottom: 6px; line-height: 1.6; }
+    .card-en   { font-family: 'Cinzel', serif; font-size: 11px; color: #1e2d4a; font-weight: 600; line-height: 1.6; margin-bottom: 12px; }
+    .card-desc { font-size: 12px; color: #4a5878; line-height: 1.7; }
+    .card-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .card-btn  { font-size: 10px; letter-spacing: 1.5px; color: #8B6914; border: 1px solid #C9A84C88; padding: 4px 10px; border-radius: 2px; font-family: 'Cinzel', serif; cursor: pointer; transition: background .2s; background: transparent; white-space: nowrap; text-decoration: none; display: inline-block; }
+    .card-btn:hover { background: #C9A84C22; }
+
+    /* ── Lightbox ── */
+    .lb-overlay { display: none; position: fixed; inset: 0; background: #00000099; z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .lb-overlay.active { display: flex; }
+    .lb-modal  { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 4px; width: 96%; max-width: 1100px; max-height: 95vh; overflow: hidden; display: flex; flex-direction: column; }
+    .lb-header { padding: 14px 18px; border-bottom: 1px solid #c0c8dc; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .lb-title-zh { font-size: 13px; color: #8B6914; }
+    .lb-title-en { font-family: 'Cinzel', serif; font-size: 10px; color: #4a5878; letter-spacing: 1px; margin-top: 3px; }
+    .lb-close  { width: 28px; height: 28px; border: 1px solid #c0c8dc; border-radius: 2px; color: #4a5878; font-size: 16px; cursor: pointer; background: transparent; display: flex; align-items: center; justify-content: center; transition: border-color .2s, color .2s; }
+    .lb-close:hover { border-color: #C9A84C; color: #8B6914; }
+    .lb-img-area { flex: 1; min-height: 0; position: relative; background: #e0e4ef; overflow: auto; }
+    .lb-img-area img { width: 100%; height: auto; display: none; }
+    .lb-img-area img.active { display: block; }
+    .lb-arrow  { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: #f4f6fbcc; border: 1px solid #c0c8dc; border-radius: 2px; color: #8B6914; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, border-color .2s; z-index: 10; }
+    .lb-arrow:hover { background: #eef0f8; border-color: #C9A84C; }
+    .lb-arrow.prev { left: 10px; }
+    .lb-arrow.next { right: 10px; }
+    .lb-caption { padding: 8px 18px; font-size: 12px; color: #4a5878; border-top: 1px solid #c0c8dc44; flex-shrink: 0; min-height: 34px; }
+    .lb-thumbs { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid #c0c8dc; overflow-x: auto; flex-shrink: 0; background: #dde2ee; }
+    .lb-thumb  { width: 80px; height: 50px; object-fit: cover; border: 1px solid #c0c8dc; border-radius: 2px; cursor: pointer; opacity: .5; transition: opacity .2s, border-color .2s; flex-shrink: 0; }
+    .lb-thumb.active { opacity: 1; border-color: #C9A84C; }
+    .lb-thumb:hover  { opacity: .8; }
+
+    /* ── Footer ── */
+    footer { background: #dde2ee; border-top: 1px solid #b0b8d0; padding: 32px; text-align: center; }
+    .footer-brand { font-family: 'Cinzel', serif; font-size: 13px; color: #8B6914; margin-bottom: 8px; letter-spacing: 2px; }
+    .footer-note  { font-size: 11px; color: #8898b8; letter-spacing: 1px; }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <canvas id="starCanvas"></canvas>
+  <div class="hero-inner">
+    <p class="shop-label">AstroGraph · Western Astrology</p>
+    <h1 class="hero-title">個人占星工作簿</h1>
+    <p class="hero-sub">Personalized Western Astrology Workbooks</p>
+  </div>
+</header>
+
+<section class="intent">
+  <p class="intent-label">Design Intent · 設計初衷</p>
+  <p class="intent-text">許多占星書對相位的描述生動，但在實務上難以對照生命歷程。傳統圓形星盤適合觀察當下的行星配置，卻無法完整呈現外行星長達數年的時間序列。採用 Excel 甘特圖式排版，目的是為了精確標記相位從進入容許度、入相到出相的完整過程，使長週期的人生轉折具備清晰的時間橫軸。選擇 Excel 介面而非特定 App，是基於資料處理的考量：使用者可自行篩選、排序或加註，且數據不因平台更迭或訂閱機制受限，方便長期檢索與紙本存檔。</p>
+</section>
+
+<!-- 1. 行運甘特圖：外行星 → 本命 → 年度 -->
+<section class="section">
+  <div class="cat-header"><div class="cat-line"></div><div class="cat-title">Transit Gantt Charts</div><div class="cat-line"></div></div>
+  <p class="cat-zh">行運甘特圖</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-icon">♅</div>
+      <div class="card-zh">行運外行星視角 ✦ 百年甘特圖</div>
+      <div class="card-en">Outer Planet Transits<br>Century Gantt Chart</div>
+      <div class="card-desc">Jupiter through Pluto — generational cycles across a century.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('外')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">♄</div>
+      <div class="card-zh">本命視角 ✦ 百年行運甘特圖</div>
+      <div class="card-en">Natal Perspective<br>Century Transit Gantt</div>
+      <div class="card-desc">100 years of transits mapped against your natal chart.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('本')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">☿</div>
+      <div class="card-zh">年度行運 ✦ 四視角甘特圖</div>
+      <div class="card-en">Annual Transits<br>Four-Perspective Gantt</div>
+      <div class="card-desc">5 / 10 / 15-year packages. Four interpretive angles in one workbook.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('年')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 2. 太陽回歸：2×2 -->
+<section class="section">
+  <div class="cat-header"><div class="cat-line"></div><div class="cat-title">Solar Return Series</div><div class="cat-line"></div></div>
+  <p class="cat-zh">太陽回歸系列</p>
+  <div class="cat-desc-block">
+    <p>太陽回歸盤是占星學觀察年度運勢的核心。當太陽每年回到出生時的精確度數，那一刻的星象便揭示了該年份的心理焦點與生活主題。若將視角從單一年份延伸至數十年的資料並列，則能從「點狀事件」升格為「週期剖析」：辨識能量循環、鎖定人生轉折、解讀連續脈絡，理解個體成熟的過程，而非碎片化的運勢預測。</p>
+  </div>
+  <div class="grid-2col">
+
+    <div class="card">
+      <div class="card-icon">☀</div>
+      <div class="card-zh">太陽回歸 ✦ 三視角雙相位星盤圖</div>
+      <div class="card-en">Solar Return<br>Triple-View Aspect Chart</div>
+      <div class="card-desc">Three interpretive perspectives with dual aspect overlays per return.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('SR')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">☀</div>
+      <div class="card-zh">太陽回歸 ✦ 百年資料庫</div>
+      <div class="card-en">Solar Return<br>Century Database</div>
+      <div class="card-desc">100 solar return charts with full planetary &amp; cusp data.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('SRDB')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">☽</div>
+      <div class="card-zh">百年太陽回歸 × 本命相位總覽</div>
+      <div class="card-en">Solar Return × Natal<br>Aspects Overview</div>
+      <div class="card-desc">SR–natal aspect analysis across 100 years in one view.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('SRN')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">★</div>
+      <div class="card-zh">太陽回歸 ✦ 相位總覽</div>
+      <div class="card-en">Solar Return<br>Aspects Overview</div>
+      <div class="card-desc">Internal SR aspects — conjunctions, harmonics, and challenges.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('SRSR')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 3. 恆星相位 -->
+<section class="section">
+  <div class="cat-header"><div class="cat-line"></div><div class="cat-title">Fixed Star Aspects</div><div class="cat-line"></div></div>
+  <p class="cat-zh">恆星相位</p>
+  <div class="cat-desc-block">
+    <p>恆星在占星學中代表命運中固有的深層特質，其影響力不因時代而移動。透過分析本命盤與太陽回歸盤中的行星與恆星相位，可進一步解析生命中反覆出現的主題、天賦潛能，以及特定人生階段的命運觸發點。</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-icon">✦</div>
+      <div class="card-zh">恆星 × 本命 ✦ 相位總覽</div>
+      <div class="card-en">Fixed Stars × Natal<br>Aspects Overview</div>
+      <div class="card-desc">Natal planets in aspect to fixed stars — identify deep-seated themes and talents.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('恆')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">✦</div>
+      <div class="card-zh">恆星 × 太陽回歸 ✦ 相位總覽</div>
+      <div class="card-en">Fixed Stars × Solar Return<br>Aspects Overview</div>
+      <div class="card-desc">Annual SR planets aligned with fixed stars — pinpoint activated themes year by year.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('恆')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. 日月食 -->
+<section class="section">
+  <div class="cat-header"><div class="cat-line"></div><div class="cat-title">Eclipse Series</div><div class="cat-line"></div></div>
+  <p class="cat-zh">日月食系列</p>
+  <div class="cat-desc-block">
+    <p>日月食在占星學中被視為命運的催化劑，儘管其影響力往往帶有滯後性，需數月時間方能顯現。若將長達百年的日月食路徑，與個人本命盤及太陽回歸盤進行交叉比對，將能更精準地解構生命動能：核心配置的觸動、啟動力度的強弱——當食相與太陽回歸盤的關鍵軸線重疊，往往預示著該年度將迎來深刻且具備結構性的轉變。</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-icon">🌑</div>
+      <div class="card-zh">百年日月食 × 本命相位總覽</div>
+      <div class="card-en">Century Eclipses × Natal<br>Aspects Overview</div>
+      <div class="card-desc">100 years of eclipse–natal aspect analysis. Identify which eclipses directly trigger your core chart.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('Ecli')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🌑</div>
+      <div class="card-zh">百年日月食 × 太陽回歸相位總覽</div>
+      <div class="card-en">Century Eclipses × Solar Return<br>Aspects Overview</div>
+      <div class="card-desc">Cross-reference eclipse cycles with annual solar return charts across 100 years.</div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="openLB('Ecli')">預覽截圖 ↗</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p class="footer-brand">AstroGraph</p>
+  <p class="footer-note">Excel · VBA · Western Astrology · Placidus · Tropical</p>
+</footer>
+
+<!-- Lightbox -->
+<div class="lb-overlay" id="lbOverlay" onclick="handleOverlayClick(event)">
+  <div class="lb-modal">
+    <div class="lb-header">
+      <div>
+        <div class="lb-title-zh" id="lbTitleZh"></div>
+        <div class="lb-title-en" id="lbTitleEn"></div>
+      </div>
+      <button class="lb-close" onclick="closeLB()">✕</button>
+    </div>
+    <div class="lb-img-area" id="lbImgArea">
+      <button class="lb-arrow prev" onclick="changeImg(-1)">&#8249;</button>
+      <button class="lb-arrow next" onclick="changeImg(1)">&#8250;</button>
+    </div>
+    <div class="lb-caption" id="lbCaption"></div>
+    <div class="lb-thumbs" id="lbThumbs"></div>
+  </div>
+</div>
+
+<script>
+/* ── Star canvas ── */
+(function () {
+  const canvas = document.getElementById('starCanvas');
+  const hero   = canvas.parentElement;
+
+  const STARS = [
+    // [x%, y%, radius, opacity, isGold]
+    [3,   6,  1.8, 0.95, true ],
+    [7,  28,  0.8, 0.55, false],
+    [11, 70,  1.1, 0.65, false],
+    [14, 14,  0.6, 0.45, false],
+    [17, 48,  1.4, 0.80, true ],
+    [20, 82,  0.7, 0.50, false],
+    [24, 35,  2.0, 1.00, true ],
+    [27, 91,  0.6, 0.40, false],
+    [30, 58,  0.9, 0.60, false],
+    [33, 18,  1.0, 0.70, false],
+    [36, 44,  0.6, 0.40, false],
+    [39,  5,  1.5, 0.85, true ],
+    [41, 76,  0.8, 0.55, false],
+    [44, 32,  0.7, 0.50, false],
+    [47, 62,  2.5, 0.95, true ],
+    [50, 88,  0.6, 0.40, false],
+    [52, 22,  1.0, 0.65, false],
+    [55, 50,  0.8, 0.55, false],
+    [58, 78,  1.6, 0.80, true ],
+    [61, 10,  0.7, 0.50, false],
+    [64, 40,  0.6, 0.45, false],
+    [67, 68,  1.2, 0.70, false],
+    [70, 25,  0.8, 0.55, false],
+    [72,  3,  1.9, 0.90, true ],
+    [75, 55,  0.7, 0.50, false],
+    [78, 85,  1.0, 0.60, false],
+    [81, 42,  0.6, 0.45, false],
+    [84, 16,  1.4, 0.75, true ],
+    [87, 72,  0.8, 0.55, false],
+    [90, 30,  0.7, 0.50, false],
+    [92, 60,  1.8, 0.85, true ],
+    [94, 90,  0.6, 0.40, false],
+    [96, 20,  1.0, 0.65, false],
+    [98, 50,  0.7, 0.50, false],
+    [9,  95,  1.2, 0.60, false],
+    [22, 97,  0.8, 0.45, false],
+    [46, 96,  1.0, 0.55, false],
+    [63, 94,  0.7, 0.45, false],
+    [80, 97,  1.1, 0.55, false],
+  ];
+
+  function resize() {
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    draw();
+  }
+
+  function draw() {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    STARS.forEach(([xp, yp, r, alpha, gold]) => {
+      const x = canvas.width  * xp / 100;
+      const y = canvas.height * yp / 100;
+      const color = gold ? `rgba(201,168,76,${alpha})` : `rgba(255,255,255,${alpha})`;
+
+      // glow halo for larger stars
+      if (r >= 1.2) {
+        const grd = ctx.createRadialGradient(x, y, 0, x, y, r * 5);
+        grd.addColorStop(0, gold ? `rgba(201,168,76,${alpha * 0.35})` : `rgba(255,255,255,${alpha * 0.25})`);
+        grd.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.beginPath();
+        ctx.arc(x, y, r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+      }
+
+      // core dot
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+})();
+
+/* ── Lightbox ── */
+const PRODUCTS = {
+  'SR': {
+    zh: '太陽回歸 ✦ 三視角雙相位星盤圖',
+    en: 'Solar Return · Triple-View Aspect Chart',
+    imgs: ['SRChart-1.png','SRChart-2.png','SRChart-3.png','SRChart-4.png','SRChart-5.png'],
+    captions: [
+      '工作表導覽 — 各年度結構總覽',
+      '2026 太陽回歸概覽 — SR 關鍵配置、年度小限與食相標記',
+      'View I — Solar Return 星盤：SR 內相位與本命外輪',
+      'Complete SR-Natal Aspect Matrix — 相位矩陣使用說明',
+      'Key Exact Aspects (orb < 1°) — 精準相位總表與完整相位矩陣'
+    ]
+  },
+  'SRDB': {
+    zh: '太陽回歸 ✦ 百年資料庫',
+    en: 'Solar Return · Century Database',
+    imgs: ['SRDB-1.png','SRDB-2.png','SRDB-3.png','SRDB-4.png','SRDB-5.png','SRDB-6.png'],
+    captions: [
+      '工作表導覽 — 10 張工作表，5 大類別',
+      'SR 天頂行星觀測 — 最高點行星、落入宮位與 AC→MC 模式',
+      'SR 四軸合相星體 — 與 SR 四軸合相之行星及 orb',
+      'SR 本命四軸合相 — 與本命四軸合相之 SR 星體及宮頭',
+      'SR 本命星體合相 — 與 SR 四軸合相之本命星體與 orb',
+      'SR 劫奪星座分析 — 劫奪星座、複式星座及守護行星'
+    ]
+  },
+  'SRN': {
+    zh: '百年太陽回歸 × 本命相位總覽',
+    en: 'Solar Return × Natal · Aspects Overview',
+    imgs: ['SRN-1.png','SRN-2.png','SRN-3.png','SRN-4.png','SRN-5.png','SRN-6.png'],
+    captions: [
+      '工作表導覽 — 4 張工作表，2 大類別',
+      'Focus 欄篩選操作步驟 — 六步驟精準篩選相位',
+      '本命視角 SR 相位總覽 — 查本命星點被哪些 SR 行星觸發',
+      'SR 視角本命相位總覽 — 查 SR 行星觸發了哪些本命星點',
+      'SR 星體宮位位置 — 15 個星體星座/度數/逆行/宮位',
+      'SR 宮頭星座位置 — 十二宮宮頭星座/度數'
+    ]
+  },
+  'SRSR': {
+    zh: '太陽回歸 ✦ 相位總覽',
+    en: 'Solar Return · Aspects Overview',
+    imgs: ['SRSR-1.png','SRSR-2.png','SRSR-3.png','SRSR-4.png'],
+    captions: [
+      '工作表導覽 — 3 張工作表，2 大類別',
+      'SR 星體相位總覽 — SR 行星/虛點相位總覽（Focus 欄篩選）',
+      'Focus 篩選示範 — 選取 SR-木星，顯示該年份所有相關相位',
+      'Focus 篩選結果 — 僅顯示含 SR-木星的年份'
+    ]
+  },
+  'Ecli': {
+    zh: '日月食相位分析',
+    en: 'Eclipse Aspect Analysis',
+    imgs: ['Ecli-1.png','Ecli-2.png','Ecli-3.png'],
+    captions: [
+      '工作表導覽 — 5 張工作表，4 大類別',
+      'SR_Eclipse_Aspects — 太陽回歸 × 日月食相位表，含 orb<1° 與 orb≥1° 分欄',
+      'Eclipse_Common_Aspects — 本命 & 太陽回歸日月食共同觸發星體總覽'
+    ]
+  },
+  '恆': {
+    zh: '恆星相位資料庫',
+    en: 'Fixed Star Aspect Database',
+    imgs: ['恆-1.png','恆-2.png','恆-3.png','恆-4.png','恆-5.png','恆-6.png'],
+    captions: [
+      '工作表導覽 — 5 張工作表，3 大類別',
+      'Focus 欄篩選操作步驟 — 六步驟精準篩選恆星相位',
+      '恆星相位總覽 — 各 SR 年份四軸與行星觸發恆星一覽',
+      '以四軸與個人行星為視角 — AC 欄：各年份與 AC 合相之恆星',
+      '以四軸與個人行星為視角（Focus 篩選）— 展開恆星清單',
+      '以四軸與個人行星為視角（篩選結果）— 僅顯示含特定恆星的年份'
+    ]
+  },
+  '年': {
+    zh: '年度行運 ✦ 四視角甘特圖',
+    en: 'Annual Transits · Four-Perspective Gantt',
+    imgs: ['年-1.png','年-2.png','年-3.png','年-4.png','年-5.png','年-6.png'],
+    captions: [
+      '工作表導覽 — 20 張工作表，5 個年度',
+      '使用指南 — 四大視角完整說明',
+      '本命星體觸發總覽 2026 — 各相位影響期與關鍵期',
+      '外行星年度影響總覽 2026 — 大環境推力一覽',
+      '關鍵影響時間軸 2026 — 能量最強爆發點',
+      '行運相位總覽 2026 — 全年完整相位參考'
+    ]
+  },
+  '本': {
+    zh: '本命視角 ✦ 百年行運甘特圖',
+    en: 'Natal Perspective · Century Transit Gantt',
+    imgs: ['本-1.png','本-2.png','本-3.png','本-4.png'],
+    captions: [
+      '工作表導覽 — 17 張工作表，6 大類別',
+      '使用指南 — 功能特色與閱讀方式說明',
+      '甘特圖主畫面 — 本命太陽視角，多行星並列',
+      '甘特圖細節 — 相位日期、落入宮位完整呈現'
+    ]
+  },
+  '外': {
+    zh: '行運外行星視角 ✦ 百年甘特圖',
+    en: 'Outer Planet Transits · Century Gantt Chart',
+    imgs: ['外-1.png','外-2.png','外-3.png','外-4.png'],
+    captions: [
+      '工作表導覽 — 8 張工作表，3 大類別',
+      '使用指南 — 功能特色與閱讀方式說明',
+      '甘特圖主畫面 — 行運冥王星視角，多本命點並列',
+      '甘特圖細節 — 相位日期、落入宮位完整呈現'
+    ]
+  }
+};
+
+let current = 0;
+let currentProduct = null;
+
+function openLB(key) {
+  currentProduct = PRODUCTS[key];
+  current = 0;
+  document.getElementById('lbTitleZh').textContent = currentProduct.zh;
+  document.getElementById('lbTitleEn').textContent = currentProduct.en;
+
+  const area = document.getElementById('lbImgArea');
+  area.querySelectorAll('img').forEach(el => el.remove());
+  currentProduct.imgs.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = currentProduct.captions[i];
+    if (i === 0) img.classList.add('active');
+    area.appendChild(img);
+  });
+
+  const thumbs = document.getElementById('lbThumbs');
+  thumbs.innerHTML = '';
+  currentProduct.imgs.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'lb-thumb' + (i === 0 ? ' active' : '');
+    img.onclick = () => goTo(i);
+    thumbs.appendChild(img);
+  });
+
+  document.getElementById('lbCaption').textContent = currentProduct.captions[0];
+  document.getElementById('lbOverlay').classList.add('active');
+}
+
+function closeLB() {
+  document.getElementById('lbOverlay').classList.remove('active');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('lbOverlay')) closeLB();
+}
+
+function goTo(idx) {
+  const imgs   = document.querySelectorAll('#lbImgArea img');
+  const thumbs = document.querySelectorAll('.lb-thumb');
+  imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
+  thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.getElementById('lbCaption').textContent = currentProduct.captions[idx];
+  current = idx;
+}
+
+function changeImg(dir) {
+  if (!currentProduct) return;
+  goTo((current + dir + currentProduct.imgs.length) % currentProduct.imgs.length);
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lbOverlay').classList.contains('active')) return;
+  if (e.key === 'ArrowRight') changeImg(1);
+  if (e.key === 'ArrowLeft')  changeImg(-1);
+  if (e.key === 'Escape')     closeLB();
+});
+</script>
+</body>
+</html>
