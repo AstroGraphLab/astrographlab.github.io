@@ -77,7 +77,50 @@
     footer { background: #dde2ee; border-top: 1px solid #b0b8d0; padding: 32px; text-align: center; }
     .footer-brand { font-family: 'Cinzel', serif; font-size: 13px; color: #8B6914; margin-bottom: 8px; letter-spacing: 2px; }
     .footer-note  { font-size: 11px; color: #8898b8; letter-spacing: 1px; }
+
+    /* == Floating Button == */
+    .fab { position: fixed; bottom: 28px; right: 28px; z-index: 900; display: flex; align-items: center; gap: 9px; padding: 12px 20px; background: #0b1020; border: 1px solid #C9A84C; border-radius: 3px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: #C9A84C; box-shadow: 0 4px 20px rgba(0,0,0,0.20); transition: background .2s; }
+    .fab:hover { background: #111828; }
+    .fab-icon { font-size: 15px; opacity: .9; }
+
+    /* == Order Modal == */
+    .order-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 950; align-items: center; justify-content: center; backdrop-filter: blur(6px); padding: 16px; }
+    .order-overlay.active { display: flex; }
+    .order-modal { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 4px; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; }
+    .order-header { padding: 20px 24px 16px; border-bottom: 1px solid #c0c8dc; display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: #f4f6fb; z-index: 1; }
+    .order-title-en { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: #8B6914; text-transform: uppercase; }
+    .order-title-zh { font-size: 18px; color: #1e2d4a; margin-top: 4px; font-weight: 500; }
+    .order-close { width: 28px; height: 28px; border: 1px solid #c0c8dc; border-radius: 2px; color: #4a5878; font-size: 16px; cursor: pointer; background: transparent; display: flex; align-items: center; justify-content: center; transition: border-color .2s, color .2s; flex-shrink: 0; }
+    .order-close:hover { border-color: #C9A84C; color: #8B6914; }
+    .order-body { padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+    .form-section-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2.5px; color: #7888a0; text-transform: uppercase; padding-bottom: 6px; border-bottom: 1px solid #dde2ee; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-label-en { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; color: #8B6914; text-transform: uppercase; }
+    .form-label-zh { font-size: 13px; color: #1e2d4a; }
+    .form-hint { font-size: 11px; color: #8898b8; }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 9px 12px; background: #fff; border: 1px solid #c0c8dc; border-radius: 2px; font-family: 'EB Garamond', Georgia, serif; font-size: 14px; color: #1e2d4a; transition: border-color .2s, box-shadow .2s; outline: none; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #C9A84C; box-shadow: 0 0 0 2px rgba(201,168,76,0.12); }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B6914' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; cursor: pointer; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .submit-btn { width: 100%; padding: 13px; background: #0b1020; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2.5px; cursor: pointer; border-radius: 2px; transition: background .2s; margin-top: 4px; }
+    .submit-btn:hover:not(:disabled) { background: #1a2744; }
+    .submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .form-notice { font-size: 12px; color: #8898b8; line-height: 1.7; text-align: center; }
+    .form-status { display: none; padding: 14px 16px; border-radius: 2px; font-size: 13px; line-height: 1.7; text-align: center; }
+    .form-status.success { display: block; background: #eef6ee; border: 1px solid #a8cca8; color: #2a5a2a; }
+    .form-status.error   { display: block; background: #fdf0f0; border: 1px solid #d4a0a0; color: #6a2020; }
+
+    /* == Mobile hover fix == */
+    @media (hover: hover) {
+      .card:hover { border-color: #C9A84C99; background: #eef0f8; }
+      .card:hover::after { opacity: 1; }
+    }
+    @media (hover: none) {
+      .card.selected { border-color: #C9A84C99; background: #eef0f8; }
+      .card.selected::after { opacity: 1; }
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -513,7 +556,174 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') changeImg(1);
   if (e.key === 'ArrowLeft')  changeImg(-1);
   if (e.key === 'Escape')     closeLB();
+  if (e.key === 'Escape')     closeOrder();
 });
+</script>
+
+<!-- Floating Order Button -->
+<button class="fab" onclick="openOrder()">
+  <span class="fab-icon">✦</span>
+  <span>訂購 · Order</span>
+</button>
+
+<!-- Order Form Modal -->
+<div class="order-overlay" id="orderOverlay" onclick="handleOrderOverlayClick(event)">
+  <div class="order-modal">
+    <div class="order-header">
+      <div>
+        <div class="order-title-en">Place an Order</div>
+        <div class="order-title-zh">填寫出生資料</div>
+      </div>
+      <button class="order-close" onclick="closeOrder()">✕</button>
+    </div>
+    <div class="order-body">
+
+      <div class="form-section-label">Personal Information · 個人資料</div>
+
+      <div class="form-group">
+        <span class="form-label-en">Name</span>
+        <span class="form-label-zh">姓名</span>
+        <input class="form-input" id="f_name" type="text" placeholder="您的姓名 / Your name" required>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label-en">Email</span>
+        <span class="form-label-zh">電子郵件</span>
+        <input class="form-input" id="f_email" type="email" placeholder="確認信將寄送至此信箱 / Confirmation will be sent here" required>
+      </div>
+
+      <div class="form-section-label">Birth Data · 出生資料</div>
+
+      <div class="form-group">
+        <span class="form-label-en">Date of Birth</span>
+        <span class="form-label-zh">出生日期</span>
+        <input class="form-input" id="f_date" type="date" required>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label-en">Time of Birth</span>
+        <span class="form-label-zh">出生時間</span>
+        <input class="form-input" id="f_time" type="time">
+        <span class="form-hint">若不確定出生時間，可留空 / Leave blank if unknown</span>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label-en">Place of Birth</span>
+        <span class="form-label-zh">出生地點</span>
+        <input class="form-input" id="f_place" type="text" placeholder="城市、國家 / City, Country" required>
+      </div>
+
+      <div class="form-section-label">Product Selection · 選擇產品</div>
+
+      <div class="form-group">
+        <span class="form-label-en">Product</span>
+        <span class="form-label-zh">產品</span>
+        <select class="form-select" id="f_product" required>
+          <option value="" disabled selected>請選擇產品 / Select a product</option>
+          <optgroup label="行運甘特圖 · Transit Gantt Charts">
+            <option>行運外行星視角 ✦ 百年甘特圖</option>
+            <option>本命視角 ✦ 百年行運甘特圖</option>
+            <option>年度行運 ✦ 四視角甘特圖</option>
+          </optgroup>
+          <optgroup label="太陽回歸系列 · Solar Return Series">
+            <option>太陽回歸 ✦ 三視角雙相位星盤圖</option>
+            <option>太陽回歸 ✦ 百年資料庫</option>
+            <option>百年太陽回歸 × 本命相位總覽</option>
+            <option>太陽回歸 ✦ 相位總覽</option>
+          </optgroup>
+          <optgroup label="恆星相位 · Fixed Star Aspects">
+            <option>恆星相位資料庫</option>
+          </optgroup>
+          <optgroup label="日月食系列 · Eclipse Series">
+            <option>日月食相位分析</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label-en">Notes</span>
+        <span class="form-label-zh">備註</span>
+        <textarea class="form-textarea" id="f_notes" placeholder="其他需要告知的事項 / Any additional notes"></textarea>
+      </div>
+
+      <div id="formStatus" class="form-status"></div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitOrder()">
+        送出訂單 · Submit Order
+      </button>
+
+      <p class="form-notice">
+        收到資料後將於 1–2 個工作天內以 Email 回覆確認訂單細節及付款方式。<br>
+        We will reply within 1–2 business days to confirm your order and payment details.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── EmailJS ── */
+const EMAILJS_PUBLIC_KEY  = '_Di9App3wWghrO_wY';
+const EMAILJS_SERVICE_ID  = 'service_17468q2';
+const EMAILJS_TMPL_OWNER  = 'gmewlqq';
+const EMAILJS_TMPL_CLIENT = 'ph6xi1m';
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+function openOrder() {
+  document.getElementById('orderOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeOrder() {
+  document.getElementById('orderOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function handleOrderOverlayClick(e) {
+  if (e.target === document.getElementById('orderOverlay')) closeOrder();
+}
+
+async function submitOrder() {
+  const btn    = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+  const name    = document.getElementById('f_name').value.trim();
+  const email   = document.getElementById('f_email').value.trim();
+  const date    = document.getElementById('f_date').value;
+  const time    = document.getElementById('f_time').value || '不確定 / Unknown';
+  const place   = document.getElementById('f_place').value.trim();
+  const product = document.getElementById('f_product').value;
+  const notes   = document.getElementById('f_notes').value.trim() || '—';
+
+  if (!name || !email || !date || !place || !product) {
+    status.className = 'form-status error';
+    status.textContent = '請填寫所有必填欄位。/ Please fill in all required fields.';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '傳送中… / Sending…';
+  status.className = 'form-status';
+
+  const params = { name, email, date, time, place, product, notes };
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_OWNER,  params);
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_CLIENT, params);
+    status.className = 'form-status success';
+    status.innerHTML = '已成功送出！確認信將寄送至您的信箱。<br>Order submitted! A confirmation email is on its way.';
+    btn.textContent = '已送出 · Submitted';
+  } catch (err) {
+    status.className = 'form-status error';
+    status.innerHTML = '送出失敗，請稍後再試。<br>Submission failed. Please try again.';
+    btn.disabled = false;
+    btn.textContent = '送出訂單 · Submit Order';
+    console.error('EmailJS error:', err);
+  }
+}
+  // Mobile card tap highlight
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    });
+  });
 </script>
 </body>
 </html>
