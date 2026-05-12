@@ -603,14 +603,20 @@ document.addEventListener('keydown', e => {
       <div class="form-group">
         <span class="form-label-en">Time of Birth</span>
         <span class="form-label-zh">出生時間</span>
-        <input class="form-input" id="f_time" type="time">
-        <span class="form-hint">若不確定出生時間，可留空 / Leave blank if unknown</span>
+        <input class="form-input" id="f_time" type="time" required>
       </div>
 
-      <div class="form-group">
-        <span class="form-label-en">Place of Birth</span>
-        <span class="form-label-zh">出生地點</span>
-        <input class="form-input" id="f_place" type="text" placeholder="城市、國家 / City, Country" required>
+      <div class="form-row">
+        <div class="form-group">
+          <span class="form-label-en">City of Birth</span>
+          <span class="form-label-zh">出生城市</span>
+          <input class="form-input" id="f_city" type="text" placeholder="城市 / City" required>
+        </div>
+        <div class="form-group">
+          <span class="form-label-en">Country of Birth</span>
+          <span class="form-label-zh">出生國家</span>
+          <input class="form-input" id="f_country" type="text" placeholder="國家 / Country" required>
+        </div>
       </div>
 
       <div class="form-section-label">Product Selection · 選擇產品</div>
@@ -688,12 +694,14 @@ async function submitOrder() {
   const name    = document.getElementById('f_name').value.trim();
   const email   = document.getElementById('f_email').value.trim();
   const date    = document.getElementById('f_date').value;
-  const time    = document.getElementById('f_time').value || '不確定 / Unknown';
-  const place   = document.getElementById('f_place').value.trim();
+  const time    = document.getElementById('f_time').value;
+  const city    = document.getElementById('f_city').value.trim();
+  const country = document.getElementById('f_country').value.trim();
+  const place   = city + ', ' + country;
   const product = document.getElementById('f_product').value;
   const notes   = document.getElementById('f_notes').value.trim() || '—';
 
-  if (!name || !email || !date || !place || !product) {
+  if (!name || !email || !date || !time || !city || !country || !product) {
     status.className = 'form-status error';
     status.textContent = '請填寫所有必填欄位。/ Please fill in all required fields.';
     return;
