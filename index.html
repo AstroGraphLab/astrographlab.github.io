@@ -38,6 +38,9 @@
     /* ── Grid & Cards ── */
     .grid      { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 720px; margin: 0 auto; }
     .grid-2col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 720px; margin: 0 auto; }
+    @media (max-width: 600px) {
+      .grid-2col { grid-template-columns: 1fr; }
+    }
 
     .card { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 3px; padding: 22px 18px; position: relative; overflow: hidden; transition: border-color .2s, background .2s; }
     .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #C9A84C; opacity: 0; transition: opacity .2s; }
@@ -184,7 +187,7 @@
   <div class="cat-desc-block">
     <p>太陽回歸盤是占星學觀察年度運勢的核心。當太陽每年回到出生時的精確度數，那一刻的星象便揭示了該年份的心理焦點與生活主題。若將視角從單一年份延伸至數十年的資料並列，則能從「點狀事件」升格為「週期剖析」：辨識能量循環、鎖定人生轉折、解讀連續脈絡，理解個體成熟的過程，而非碎片化的運勢預測。</p>
   </div>
-  <div class="grid">
+  <div class="grid-2col">
 
     <div class="card">
       <div class="card-icon">☀</div>
@@ -475,14 +478,12 @@ const PRODUCTS = {
   '本': {
     zh: '本命視角 ✦ 百年行運甘特圖',
     en: 'Natal Perspective · Century Transit Gantt',
-    imgs: ['本-1.png','本-2.png','本-3.png','本-4.png','本-5.png','本-6.png'],
+    imgs: ['本-1.png','本-2.png','本-3.png','本-4.png'],
     captions: [
       '工作表導覽 — 17 張工作表，6 大類別',
       '使用指南 — 功能特色與閱讀方式說明',
-      '深色 • 文字版 — 本命金星視角，多行星並列，相位日期、落入宮位完整呈現',
-      '淺色 • 文字版 — 本命金星視角，多行星並列，相位日期、落入宮位完整呈現',
-      '深色 • 英文符號版 — 本命金星視角，多行星並列，相位日期、落入宮位完整呈現',
-      '淺色 • 英文符號版 — 本命金星視角，多行星並列，相位日期、落入宮位完整呈現'
+      '甘特圖主畫面 — 本命太陽視角，多行星並列',
+      '甘特圖細節 — 相位日期、落入宮位完整呈現'
     ]
   },
   '外': {
