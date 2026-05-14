@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VBAstroCharts — 個人化占星 Excel 工作簿</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #EBEEF5; color: #1a2340; font-family: 'EB Garamond', Georgia, serif; min-height: 100vh; }
@@ -15,8 +15,9 @@
     #starCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .hero-inner { position: relative; z-index: 1; }
     .shop-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 16px; }
-    .hero-title { font-family: 'Cinzel', serif; font-size: 36px; font-weight: 600; color: #f0e8d8; margin-bottom: 10px; }
-    .hero-sub { font-size: 16px; color: #C9A84Ccc; margin-bottom: 32px; }
+    .hero-title { font-family: 'Noto Sans TC', sans-serif; font-size: 36px; font-weight: 500; color: #f0e8d8; margin-bottom: 10px; }
+    .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 16px; font-weight: 400; color: #C9A84Ccc; margin-bottom: 8px; }
+    .hero-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 32px; }
     .btn { display: inline-block; padding: 11px 32px; background: transparent; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
     .btn:hover { background: #C9A84C18; }
 
@@ -135,9 +136,10 @@
 <header class="hero">
   <canvas id="starCanvas"></canvas>
   <div class="hero-inner">
-    <p class="shop-label">VBAstroCharts · Western Astrology</p>
-    <h1 class="hero-title">個人占星工作簿</h1>
-    <p class="hero-sub">Personalized Western Astrology Workbooks</p>
+    <p class="shop-label">VBAstroCharts · Your Chart, Your Century</p>
+    <h1 class="hero-title">個人占星活頁簿</h1>
+    <p class="hero-sub">百年星曆・量身訂製</p>
+    <p class="hero-en">Personalized Astrology Workbooks · 100-Year Data</p>
   </div>
 </header>
 
@@ -470,14 +472,17 @@ const PRODUCTS = {
   '年': {
     zh: '年度行運 ✦ 四視角甘特圖',
     en: 'Annual Transits · Four-Perspective Gantt',
-    imgs: ['年-1.jpg','年-2.jpg','年-3.jpg','年-4.jpg','年-5.jpg','年-6.jpg'],
+    imgs: ['年-1.jpg','年-2.jpg','年-3.jpg','年-4.jpg','年-5.jpg','年-6.jpg','年-7.jpg','年-8.jpg','年-9.jpg'],
     captions: [
       '工作表導覽 — 20 張工作表，5 個年度',
       '使用指南 — 四大視角完整說明',
       '本命星體觸發總覽 2026 — 各相位影響期與關鍵期',
       '外行星年度影響總覽 2026 — 大環境推力一覽',
       '關鍵影響時間軸 2026 — 能量最強爆發點',
-      '行運相位總覽 2026 — 全年完整相位參考'
+      '行運相位總覽 2026 — 全年完整相位參考',
+      '外行星年度影響總覽 2026',
+      '外行星年度影響總覽 2026 · 英文版 · 深色',
+      '外行星年度影響總覽 2026 · 英文版 · 淺色'
     ]
   },
   '本': {
