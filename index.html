@@ -69,6 +69,7 @@
     .lb-img-area { flex: 1; min-height: 0; position: relative; background: #e0e4ef; overflow: auto; display: flex; align-items: flex-start; justify-content: center; }
     .lb-img-area img { max-width: 100%; width: auto; height: auto; display: none; }
     .lb-img-area img.active { display: block; }
+    .lb-img-area img.wide-img { max-width: none; width: auto; }
     .lb-arrow  { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: #f4f6fbcc; border: 1px solid #c0c8dc; border-radius: 2px; color: #8B6914; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, border-color .2s; z-index: 10; }
     .lb-arrow:hover { background: #eef0f8; border-color: #C9A84C; }
     .lb-arrow.prev { left: 10px; }
@@ -525,6 +526,7 @@ function openLB(key) {
     img.src = src;
     img.alt = currentProduct.captions[i];
     if (i === 0) img.classList.add('active');
+    if (src === '本-1.jpg') img.classList.add('wide-img');
     area.appendChild(img);
   });
 
