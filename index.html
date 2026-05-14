@@ -518,8 +518,10 @@ function fitWideImg(area) {
   function apply() {
     const h = area.offsetHeight;
     const ratio = img.naturalWidth / img.naturalHeight;
-    img.style.height = h + 'px';
-    img.style.width  = (h * ratio) + 'px';
+    // 不超過原始尺寸
+    const fittedH = Math.min(h, img.naturalHeight);
+    img.style.height = fittedH + 'px';
+    img.style.width  = (fittedH * ratio) + 'px';
   }
   if (img.complete && img.naturalHeight) apply();
   else img.addEventListener('load', apply, { once: true });
