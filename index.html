@@ -66,15 +66,13 @@
     .lb-title-en { font-family: 'Cinzel', serif; font-size: 10px; color: #4a5878; letter-spacing: 1px; margin-top: 3px; }
     .lb-close  { width: 28px; height: 28px; border: 1px solid #c0c8dc; border-radius: 2px; color: #4a5878; font-size: 16px; cursor: pointer; background: transparent; display: flex; align-items: center; justify-content: center; transition: border-color .2s, color .2s; }
     .lb-close:hover { border-color: #C9A84C; color: #8B6914; }
-    .lb-img-area { flex: 1; min-height: 0; background: #e0e4ef; overflow-x: auto; overflow-y: auto; display: flex; align-items: center; justify-content: center; }
+    .lb-img-area { flex: 1; min-height: 0; position: relative; background: #e0e4ef; overflow: auto; display: flex; align-items: flex-start; justify-content: center; }
     .lb-img-area img { max-width: 100%; width: auto; height: auto; display: none; }
     .lb-img-area img.active { display: block; }
-    .lb-img-area img.wide-img { max-width: none; width: auto; height: 100%; display: none; }
-    .lb-img-area img.wide-img.active { display: block; }
-    .lb-img-area.has-wide { justify-content: flex-start; align-items: flex-start; }
-    .lb-arrow  { width: 36px; height: 36px; background: #f4f6fbcc; border: 1px solid #c0c8dc; border-radius: 2px; color: #8B6914; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, border-color .2s; z-index: 10; flex-shrink: 0; }
+    .lb-arrow  { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: #f4f6fbcc; border: 1px solid #c0c8dc; border-radius: 2px; color: #8B6914; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, border-color .2s; z-index: 10; }
     .lb-arrow:hover { background: #eef0f8; border-color: #C9A84C; }
-    .lb-nav { display: flex; align-items: stretch; flex: 1; min-height: 0; }
+    .lb-arrow.prev { left: 10px; }
+    .lb-arrow.next { right: 10px; }
     .lb-caption { padding: 8px 18px; font-size: 12px; color: #4a5878; border-top: 1px solid #c0c8dc44; flex-shrink: 0; min-height: 34px; }
     .lb-thumbs { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid #c0c8dc; overflow-x: auto; flex-shrink: 0; background: #dde2ee; }
     .lb-thumb  { width: 80px; height: 50px; object-fit: cover; border: 1px solid #c0c8dc; border-radius: 2px; cursor: pointer; opacity: .5; transition: opacity .2s, border-color .2s; flex-shrink: 0; }
@@ -296,10 +294,9 @@
       </div>
       <button class="lb-close" onclick="closeLB()">✕</button>
     </div>
-    <div class="lb-nav">
-      <button class="lb-arrow" onclick="changeImg(-1)">&#8249;</button>
-      <div class="lb-img-area" id="lbImgArea"></div>
-      <button class="lb-arrow" onclick="changeImg(1)">&#8250;</button>
+    <div class="lb-img-area" id="lbImgArea">
+      <button class="lb-arrow prev" onclick="changeImg(-1)">&#8249;</button>
+      <button class="lb-arrow next" onclick="changeImg(1)">&#8250;</button>
     </div>
     <div class="lb-caption" id="lbCaption"></div>
     <div class="lb-thumbs" id="lbThumbs"></div>
@@ -471,17 +468,14 @@ const PRODUCTS = {
   '年': {
     zh: '年度行運 ✦ 四視角甘特圖',
     en: 'Annual Transits · Four-Perspective Gantt',
-    imgs: ['年-1.jpg','年-2.jpg','年-3.jpg','年-4.jpg','年-5.jpg','年-6.jpg','年-7.jpg','年-8.jpg','年-9.jpg'],
+    imgs: ['年-1.jpg','年-2.jpg','年-3.jpg','年-4.jpg','年-5.jpg','年-6.jpg'],
     captions: [
       '工作表導覽 — 20 張工作表，5 個年度',
-      '使用指南 — 四大解讀視角完整說明',
-      '本命星體觸發總覽 2026 — 相位影響期與關鍵期（深色版）',
-      '外行星年度影響總覽 2026 — 大環境推力一覽（深色版）',
-      '關鍵影響時間軸 2026 — 高密度觸發時段與平靜空窗（深色版）',
-      '行運相位總覽 2026 — 全年完整相位參考（深色版）',
-      '外行星年度影響總覽 2026 — 大環境推力一覽（淺色版）',
-      'Outer Planet & Special Points Influence Overview 2026（深色版）',
-      'Outer Planet & Special Points Influence Overview 2026（淺色版）'
+      '使用指南 — 四大視角完整說明',
+      '本命星體觸發總覽 2026 — 各相位影響期與關鍵期',
+      '外行星年度影響總覽 2026 — 大環境推力一覽',
+      '關鍵影響時間軸 2026 — 能量最強爆發點',
+      '行運相位總覽 2026 — 全年完整相位參考'
     ]
   },
   '本': {
@@ -523,20 +517,13 @@ function openLB(key) {
 
   const area = document.getElementById('lbImgArea');
   area.querySelectorAll('img').forEach(el => el.remove());
-  area.classList.remove('has-wide');
-  let hasWide = false;
   currentProduct.imgs.forEach((src, i) => {
     const img = document.createElement('img');
     img.src = src;
     img.alt = currentProduct.captions[i];
     if (i === 0) img.classList.add('active');
-    if (src === '本-1.jpg') {
-      img.classList.add('wide-img');
-      hasWide = true;
-    }
     area.appendChild(img);
   });
-  if (hasWide) area.classList.add('has-wide');
 
   const thumbs = document.getElementById('lbThumbs');
   thumbs.innerHTML = '';
@@ -563,12 +550,9 @@ function handleOverlayClick(e) {
 function goTo(idx) {
   const imgs   = document.querySelectorAll('#lbImgArea img');
   const thumbs = document.querySelectorAll('.lb-thumb');
-  const area   = document.getElementById('lbImgArea');
   imgs.forEach((img, i) => img.classList.toggle('active', i === idx));
   thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
   document.getElementById('lbCaption').textContent = currentProduct.captions[idx];
-  const activeImg = imgs[idx];
-  area.classList.toggle('has-wide', !!(activeImg && activeImg.classList.contains('wide-img')));
   current = idx;
 }
 
