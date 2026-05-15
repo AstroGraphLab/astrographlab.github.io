@@ -11,12 +11,13 @@
     body { background: #EBEEF5; color: #1a2340; font-family: 'EB Garamond', Georgia, serif; min-height: 100vh; }
 
     /* ── Hero ── */
-    .hero { background: #0b1020; padding: 64px 32px 52px; text-align: center; border-bottom: 1px solid #C9A84C44; position: relative; overflow: hidden; }
+    .hero { background: #0b1020; padding: 20px 32px 16px; text-align: center; border-bottom: 1px solid #C9A84C44; position: relative; overflow: hidden; }
     #starCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .hero-inner { position: relative; z-index: 1; }
     .shop-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 16px; }
     .hero-title { font-family: 'Noto Sans TC', sans-serif; font-size: 36px; font-weight: 500; color: #f0e8d8; margin-bottom: 10px; }
     .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 16px; font-weight: 400; color: #C9A84Ccc; margin-bottom: 8px; }
+    .hero-desc { font-family: 'Noto Sans TC', sans-serif; font-size: 15px; font-weight: 400; color: #c8cfe8; line-height: 2; margin-bottom: 20px; }
     .hero-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 32px; }
     .btn { display: inline-block; padding: 11px 32px; background: transparent; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
     .btn:hover { background: #C9A84C18; }
@@ -138,7 +139,8 @@
   <div class="hero-inner">
     <p class="shop-label">VBAstroCharts · Your Chart, Your Century</p>
     <h1 class="hero-title">個人占星活頁簿</h1>
-    <p class="hero-sub">百年星曆・量身訂製</p>
+    <p class="hero-sub">百年星曆・行運週期・量身訂製</p>
+    <p class="hero-desc">長期行運、相位週期與人生時間軸整理<br>以 Excel 建立可篩選、可保存的個人占星工作簿</p>
     <p class="hero-en">Personalized Astrology Workbooks · 100-Year Data</p>
   </div>
 </header>
@@ -401,11 +403,12 @@ const PRODUCTS = {
     en: 'Solar Return · Triple-View Aspect Chart',
     imgs: ['SRChart-1.jpg','SRChart-2.jpg','SRChart-3.jpg','SRChart-4.jpg','SRChart-5.jpg','SRChart-6.jpg'],
     captions: [
-      '工作表導覽 — 各年度結構總覽',
-      '2026 太陽回歸概覽 — SR 關鍵配置、年度小限與食相標記',
-      'View I — Solar Return 星盤：SR 內相位與本命外輪',
-      'Complete SR-Natal Aspect Matrix — 相位矩陣使用說明',
-      'Key Exact Aspects (orb < 1°) — 精準相位總表與完整相位矩陣'
+      '表導覽 — 各年度結構總覽',
+      '使用指南',
+      '太陽回歸概覽 — SR 關鍵配置、年度小限與食相標記（深色版）',
+      'Key Exact Aspects (orb < 1°) — 精準相位總表與完整相位矩陣（深色版）',
+      '太陽回歸概覽 — SR 關鍵配置、年度小限與食相標記（淺色版）',
+      'Key Exact Aspects (orb < 1°) — 精準相位總表與完整相位矩陣（淺色版）'
     ]
   },
   'SRDB': {
