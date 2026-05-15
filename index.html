@@ -100,6 +100,26 @@
     .lb-thumb:hover  { opacity: .8; }
 
     /* ── Footer ── */
+    /* ── FAQ ── */
+    .faq-section { background: #eef0f8; padding: 48px 32px; border-top: 1px solid #c0c8dc; }
+    .faq-header { text-align: center; margin-bottom: 32px; }
+    .faq-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 6px; }
+    .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid #c0c8dc; }
+    .faq-item:first-child { border-top: 1px solid #c0c8dc; }
+    .faq-q { width: 100%; text-align: left; padding: 16px 4px; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Noto Sans TC', sans-serif; font-size: 13px; color: #1e2d4a; font-weight: 500; gap: 12px; }
+    .faq-q-icon { font-size: 16px; color: #C9A84C; flex-shrink: 0; transition: transform .2s; }
+    .faq-item.open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 4px 16px; font-size: 13px; color: #4a5878; line-height: 1.85; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── Contact ── */
+    .contact-section { background: #f4f6fb; padding: 36px 32px; border-top: 1px solid #c0c8dc; text-align: center; }
+    .contact-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 12px; }
+    .contact-email { font-size: 14px; color: #1e2d4a; letter-spacing: 0.5px; }
+    .contact-email a { color: #1e2d4a; text-decoration: none; border-bottom: 1px solid #c0c8dc; transition: border-color .2s; }
+    .contact-email a:hover { border-color: #C9A84C; }
+
     footer { background: #dde2ee; border-top: 1px solid #b0b8d0; padding: 32px; text-align: center; }
     .footer-brand { font-family: 'Cinzel', serif; font-size: 13px; color: #8B6914; margin-bottom: 8px; letter-spacing: 2px; }
     .footer-note  { font-size: 11px; color: #8898b8; letter-spacing: 1px; }
@@ -471,6 +491,68 @@
     </div>
 
   </div>
+</section>
+
+<section class="faq-section">
+  <div class="faq-header">
+    <p class="faq-label">FAQ · 常見問題</p>
+  </div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        這些產品是什麼格式？如何取得？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">所有產品均為 Excel 檔案（.xlsx），下單後將於 1–2 個工作天內以 Email 寄送。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        需要什麼軟體才能開啟？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">建議使用 Microsoft Excel（Windows 或 Mac）。手機查閱請下載官方 Microsoft 365 App，以確保排版正確。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        可以幫他人製作嗎？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">可以。填寫訂單時請提供該人的出生資料即可，適合作為禮物或為家人朋友製作。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        年份範圍如何計算？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">年份範圍可自行指定，請在備註欄寫明所需的起始與結束年份。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        是否提供退款或修改？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">所有產品為個人化數位檔案，完成製作後恕不退款，亦不提供修改服務。下單前請仔細確認出生資料。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        出生時間不確定怎麼辦？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">所有產品對出生時間的精確度要求較高，時間不確定者請勿下單。</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact-section">
+  <p class="contact-label">Contact · 聯絡我們</p>
+  <p class="contact-email"><a href="mailto:vbastrocharts@gmail.com">vbastrocharts@gmail.com</a></p>
 </section>
 
 <footer>
@@ -1154,6 +1236,13 @@ document.querySelectorAll('.card').forEach(card => {
     card.classList.add('selected');
   });
 });
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
 </script>
 </body>
 </html>
