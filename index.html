@@ -477,6 +477,7 @@ const PRODUCTS = {
     zh: '百年太陽回歸 × 本命相位總覽',
     en: 'Solar Return × Natal · Aspects Overview',
     imgs: ['SRN-1.jpg','SRN-2.jpg','SRN-3.jpg','SRN-4.jpg','SRN-5.jpg','SRN-6.jpg'],
+    wideImgs: ['SRN-3.jpg','SRN-4.jpg','SRN-5.jpg','SRN-6.jpg'],
     captions: [
       '工作表導覽 — 4 張工作表，2 大類別',
       'Focus 欄篩選操作步驟 — 六步驟精準篩選相位',
@@ -489,12 +490,15 @@ const PRODUCTS = {
   'SRSR': {
     zh: '太陽回歸 ✦ 相位總覽',
     en: 'Solar Return · Aspects Overview',
-    imgs: ['SRSR-1.jpg','SRSR-2.jpg','SRSR-3.jpg','SRSR-4.jpg'],
+    imgs: ['SRSR-1.jpg','SRSR-2.jpg','SRSR-3.jpg','SRSR-4.jpg','SRSR-5.jpg','SRSR-6.jpg'],
+    wideImgs: ['SRSR-2.jpg','SRSR-3.jpg','SRSR-4.jpg','SRSR-5.jpg','SRSR-6.jpg'],
     captions: [
       '工作表導覽 — 3 張工作表，2 大類別',
       'SR 星體相位總覽 — SR 行星/虛點相位總覽（Focus 欄篩選）',
       'Focus 篩選示範 — 選取 SR-木星，顯示該年份所有相關相位',
-      'Focus 篩選結果 — 僅顯示含 SR-木星的年份'
+      'Focus 篩選結果 — 僅顯示含 SR-木星的年份',
+      'SR 星體宮位位置 — 15 個天體星座、度數、逆行與落入宮位',
+      'SR 宮頭星座位置 — 十二宮宮頭星座與度數'
     ]
   },
   'Ecli': {
@@ -573,12 +577,13 @@ function fitWideImg(area) {
   const img = area.querySelector('img[data-wide].active');
   if (!img) return;
   function apply() {
-    const h = area.offsetHeight;
-    const ratio = img.naturalWidth / img.naturalHeight;
-    // 不超過原始尺寸
-    const fittedH = Math.min(h, img.naturalHeight);
-    img.style.height = fittedH + 'px';
-    img.style.width  = (fittedH * ratio) + 'px';
+    requestAnimationFrame(() => {
+      const h = area.offsetHeight;
+      if (!h) return;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      img.style.height = h + 'px';
+      img.style.width  = (h * ratio) + 'px';
+    });
   }
   if (img.complete && img.naturalHeight) apply();
   else img.addEventListener('load', apply, { once: true });
