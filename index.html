@@ -16,8 +16,8 @@
     .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
     .shop-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 16px; }
     .hero-title { font-family: 'Noto Sans TC', sans-serif; font-size: 36px; font-weight: 500; color: #f0e8d8; margin-bottom: 10px; }
-    .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 16px; font-weight: 400; color: #C9A84Ccc; margin-bottom: 8px; }
-    .hero-desc { font-family: 'Noto Sans TC', sans-serif; font-size: 15px; font-weight: 400; color: #c8cfe8; line-height: 2; margin-bottom: 0; }
+    .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 400; color: #C9A84Ccc; margin-bottom: 8px; }
+    .hero-desc { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 400; color: #c8cfe8; line-height: 2; margin-bottom: 0; }
     .hero-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 32px; }
     .btn { display: inline-block; padding: 11px 32px; background: transparent; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
     .btn:hover { background: #C9A84C18; }
@@ -93,6 +93,14 @@
     .fab:hover { background: #111828; }
     .fab-icon { font-size: 15px; opacity: .9; }
 
+    @media (max-width: 600px) {
+      .shop-label { font-size: 8px; letter-spacing: 1.5px; white-space: nowrap; }
+      .hero-title  { font-size: 28px; }
+      .hero-sub    { font-size: 14px; }
+      .hero-desc   { font-size: 13px; line-height: 1.8; max-width: 300px; }
+      .fab         { padding: 10px 16px; font-size: 11px; letter-spacing: 1px; }
+    }
+
     /* == Order Modal == */
     .order-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 950; align-items: center; justify-content: center; backdrop-filter: blur(6px); padding: 16px; }
     .order-overlay.active { display: flex; }
@@ -140,7 +148,7 @@
     <p class="shop-label">VBAstroCharts · Your Chart, Your Century</p>
     <h1 class="hero-title">個人占星活頁簿</h1>
     <p class="hero-sub">百年星曆・行運週期・量身訂製</p>
-    <p class="hero-desc">長期行運、相位週期與人生時間軸整理<br>以 Excel 建立可篩選、可保存的個人占星工作簿</p>
+    <p class="hero-desc">長期行運、相位週期與人生時間軸整理，以 Excel 建立可篩選、可保存的個人占星工作簿</p>
   </div>
 </header>
 
@@ -611,7 +619,7 @@ document.addEventListener('keydown', e => {
 <!-- Floating Order Button -->
 <button class="fab" onclick="openOrder()">
   <span class="fab-icon">✦</span>
-  <span>開始製作 · Start Workbook</span>
+  <span>開始製作</span>
 </button>
 
 <!-- Order Form Modal -->
