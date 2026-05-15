@@ -25,7 +25,20 @@
     /* ── Intent ── */
     .intent { background: #dde2ee; padding: 48px 32px; border-bottom: 1px solid #b0b8d066; }
     .intent-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #7888a0; text-transform: uppercase; text-align: center; margin-bottom: 24px; }
-    .intent-text { max-width: 600px; margin: 0 auto; font-size: 16px; line-height: 1.95; color: #1e2d4a; text-align: justify; }
+    .intent-subtitle { max-width: 600px; margin: 0 auto 20px; font-size: 15px; font-weight: 500; color: #1a2744; text-align: center; font-family: 'Noto Sans TC', sans-serif; }
+    .intent-text { max-width: 600px; margin: 0 auto 16px; font-size: 15px; line-height: 1.95; color: #1e2d4a; text-align: justify; }
+    .intent-text:last-child { margin-bottom: 0; }
+
+    /* ── Tip Block ── */
+    .tip-block { max-width: 600px; margin: 32px auto 0; background: #ffffff; border: 1px solid #d4d8e8; border-top: 2px solid #C9A84C; border-radius: 4px; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+    .tip-header { display: flex; align-items: center; gap: 9px; }
+    .tip-header-icon { font-size: 13px; color: #C9A84C; opacity: .85; }
+    .tip-header-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; }
+    .tip-items { display: flex; flex-direction: column; gap: 10px; padding-left: 2px; }
+    .tip-item { display: flex; gap: 10px; align-items: flex-start; }
+    .tip-dot { width: 4px; height: 4px; border-radius: 50%; background: #C9A84C; margin-top: 8px; flex-shrink: 0; }
+    .tip-item-text { font-size: 13px; line-height: 1.8; color: #2a3a5a; }
+    .tip-item-text strong { color: #1a2744; font-weight: 500; }
 
     /* ── Sections ── */
     .section { padding: 48px 24px 56px; }
@@ -151,13 +164,32 @@
     <p class="shop-label">VBAstroCharts · Your Chart, Your Century</p>
     <h1 class="hero-title">個人占星活頁簿</h1>
     <p class="hero-sub">百年星曆・行運週期・量身訂製</p>
-    <p class="hero-desc">長期行運、相位週期與人生時間軸整理<span class="desc-break"></span>以 Excel 建立可篩選、可保存的個人占星工作簿</p>
+    <p class="hero-desc">長期行運、相位週期與人生時間軸整理<span class="desc-break"></span>以 Excel 建立可篩選、可保存的個人占星檔案</p>
   </div>
 </header>
 
 <section class="intent">
   <p class="intent-label">Design Intent · 設計初衷</p>
-  <p class="intent-text">許多占星書對相位的描述生動，但在實務上難以對照生命歷程。傳統圓形星盤適合觀察當下的行星配置，卻無法完整呈現外行星長達數年的時間序列。採用 Excel 甘特圖式排版，目的是為了精確標記相位從進入容許度、入相到出相的完整過程，使長週期的人生轉折具備清晰的時間橫軸。選擇 Excel 介面而非特定 App，是基於資料處理的考量：使用者可自行篩選、排序或加註，且數據不因平台更迭或訂閱機制受限，方便長期檢索與紙本存檔。</p>
+  <p class="intent-subtitle">VBAstroCharts：專為長期研究設計的個人占星檔案</p>
+  <p class="intent-text">這是一個將百年星曆與行運週期，轉化為可篩選、易留存的個人化數位工具。</p>
+  <p class="intent-text">許多人習慣使用圓形星盤來觀察占星相位，但若要將其落實在長期的生命紀錄中，會發現圓盤工具在呈現「時間跨度」上有其侷限。外行星的行運往往長達數年，單一時間點的星盤難以完整呈現能量的進出歷程。</p>
+  <p class="intent-text">因此，我們選擇以 Excel 作為介面，透過甘特圖式的排版，將相位從進入容許度到離開的完整歷程轉化為清晰的時間軸。</p>
+  <div class="tip-block">
+    <div class="tip-header">
+      <span class="tip-header-icon">✦</span>
+      <span class="tip-header-title">使用小提醒</span>
+    </div>
+    <div class="tip-items">
+      <div class="tip-item">
+        <div class="tip-dot"></div>
+        <p class="tip-item-text"><strong>跨平台同步：</strong>檔案可在電腦與手機間自由存取，方便隨時檢索。</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-dot"></div>
+        <p class="tip-item-text"><strong>手機瀏覽建議：</strong>為獲得最佳閱讀體驗並避免排版跑位，請下載並使用官方 Microsoft 365 (M365) App 開啟檔案。</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- 1. 行運甘特圖：外行星 → 本命 → 年度 -->
