@@ -14,9 +14,9 @@
     .hero { background: #0b1020; padding: 48px 32px 40px; text-align: center; border-bottom: 1px solid #C9A84C44; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     #starCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-    .shop-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 16px; }
+    .shop-label { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: #C9A84C; text-transform: uppercase; margin-bottom: 30px; opacity: 0.82; }
     .hero-title { font-family: 'Noto Sans TC', sans-serif; font-size: 36px; font-weight: 500; color: #f0e8d8; margin-bottom: 10px; }
-    .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 400; color: #C9A84Ccc; margin-bottom: 8px; }
+    .hero-sub { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 300; color: #B8BCC8; letter-spacing: 2px; margin-bottom: 8px; }
     .hero-desc { font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 400; color: #c8cfe8; line-height: 2; margin-bottom: 0; }
     .hero-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 32px; }
     .btn { display: inline-block; padding: 11px 32px; background: transparent; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
@@ -60,7 +60,7 @@
       .grid-2col { grid-template-columns: 1fr; }
     }
 
-    .card { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 3px; padding: 22px 18px; position: relative; overflow: hidden; transition: border-color .2s, background .2s; }
+    .card { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 3px; padding: 22px 18px; position: relative; overflow: hidden; transition: border-color .2s, background .2s; display: flex; flex-direction: column; }
     .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #C9A84C; opacity: 0; transition: opacity .2s; }
     .card:hover { border-color: #C9A84C99; background: #eef0f8; }
     .card:hover::after { opacity: 1; }
@@ -68,7 +68,8 @@
     .card-zh   { font-size: 12px; color: #8B6914; margin-bottom: 6px; line-height: 1.6; }
     .card-en   { font-family: 'Cinzel', serif; font-size: 11px; color: #1e2d4a; font-weight: 600; line-height: 1.6; margin-bottom: 12px; }
     .card-desc { font-size: 12px; color: #4a5878; line-height: 1.7; }
-    .card-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .card-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+    .card-price { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
     .card-btn  { font-size: 10px; letter-spacing: 1.5px; color: #8B6914; border: 1px solid #C9A84C88; padding: 4px 10px; border-radius: 2px; font-family: 'Cinzel', serif; cursor: pointer; transition: background .2s; background: transparent; white-space: nowrap; text-decoration: none; display: inline-block; }
     .card-btn:hover { background: #C9A84C22; }
 
@@ -106,15 +107,14 @@
     .fab:hover { background: #111828; }
     .fab-icon { font-size: 15px; opacity: .9; }
 
-    .desc-break { display: none; }
+    .desc-break { display: block; }
 
     @media (max-width: 600px) {
-      .shop-label { font-size: 8px; letter-spacing: 1.5px; white-space: nowrap; }
+      .shop-label { font-size: 10px; letter-spacing: 3px; margin-bottom: 24px; }
       .hero-title  { font-size: 28px; }
       .hero-sub    { font-size: 14px; }
       .hero-desc   { font-size: 13px; line-height: 1.8; max-width: 300px; }
       .fab         { padding: 10px 16px; font-size: 11px; letter-spacing: 1px; }
-      .desc-break  { display: block; }
     }
 
     /* == Order Modal == */
@@ -144,7 +144,75 @@
     .form-status.success { display: block; background: #eef6ee; border: 1px solid #a8cca8; color: #2a5a2a; }
     .form-status.error   { display: block; background: #fdf0f0; border: 1px solid #d4a0a0; color: #6a2020; }
 
-    /* == Mobile hover fix == */
+    /* == Step Indicator == */
+    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-bottom: 1px solid #c0c8dc; background: #f4f6fb; }
+    .step-dot { display: flex; align-items: center; gap: 6px; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 1.5px; color: #b0b8d0; text-transform: uppercase; }
+    .step-dot.active { color: #8B6914; }
+    .step-dot-num { width: 20px; height: 20px; border-radius: 50%; border: 1px solid #c0c8dc; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #b0b8d0; }
+    .step-dot.active .step-dot-num { border-color: #C9A84C; color: #8B6914; background: #fdf8ee; }
+    .step-sep { width: 32px; height: 1px; background: #c0c8dc; }
+
+    /* == Step 1: Product Selection == */
+    .prod-list { display: flex; flex-direction: column; gap: 8px; }
+    .prod-item { border: 1px solid #c0c8dc; border-radius: 3px; background: #fff; overflow: hidden; transition: border-color .2s; }
+    .prod-item.selected { border-color: #C9A84C; }
+    .prod-item-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; }
+    .prod-check { width: 16px; height: 16px; border: 1px solid #c0c8dc; border-radius: 2px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background .2s, border-color .2s; }
+    .prod-item.selected .prod-check { background: #C9A84C; border-color: #C9A84C; }
+    .prod-check-icon { font-size: 10px; color: #fff; display: none; }
+    .prod-item.selected .prod-check-icon { display: block; }
+    .prod-name { flex: 1; font-size: 12px; color: #1e2d4a; font-family: 'Noto Sans TC', sans-serif; }
+    .prod-price-tag { font-size: 11px; color: #4a5878; background: #eef0f8; border: 1px solid #c0c8dc; border-radius: 2px; padding: 2px 7px; white-space: nowrap; }
+    .prod-tiers { display: flex; gap: 6px; padding: 8px 12px 10px 38px; border-top: 1px solid #eef0f8; }
+    .prod-tier-btn { flex: 1; padding: 5px 4px; border: 1px solid #c0c8dc; border-radius: 2px; background: #f4f6fb; font-size: 11px; color: #4a5878; cursor: pointer; text-align: center; transition: background .2s, border-color .2s; }
+    .prod-tier-btn.selected { background: #fdf8ee; border-color: #C9A84C; color: #8B6914; }
+    .prod-tier-label { font-size: 9px; color: #7888a0; display: block; }
+
+    /* == Bundle Hint == */
+    .bundle-hint { background: #fdf8ee; border: 1px solid #C9A84C55; border-left: 3px solid #C9A84C; border-radius: 3px; padding: 10px 14px; font-size: 12px; color: #5a3e00; display: none; }
+    .bundle-hint.show { display: block; }
+    .bundle-hint-btn { margin-top: 6px; font-size: 11px; color: #8B6914; cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+
+    /* == Total Bar == */
+    .total-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: #1a2744; border-radius: 3px; }
+    .total-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; color: #C9A84C88; text-transform: uppercase; }
+    .total-amount { font-size: 16px; font-weight: 500; color: #f0e8d8; }
+
+    /* == Step 2 Summary == */
+    .order-summary { background: #fff; border: 1px solid #c0c8dc; border-radius: 3px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+    .order-summary-item { display: flex; justify-content: space-between; font-size: 12px; color: #1e2d4a; }
+    .order-summary-total { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: #1a2744; padding-top: 8px; border-top: 1px solid #eef0f8; margin-top: 2px; }
+
+    /* == Step Nav Buttons == */
+    .step-nav { display: flex; gap: 10px; margin-top: 4px; }
+    .btn-back { flex: 1; padding: 11px; background: transparent; border: 1px solid #c0c8dc; color: #4a5878; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; cursor: pointer; border-radius: 2px; transition: border-color .2s; }
+    .btn-back:hover { border-color: #8B6914; color: #8B6914; }
+    .btn-next { flex: 2; padding: 11px; background: #0b1020; border: 1px solid #C9A84C; color: #C9A84C; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; cursor: pointer; border-radius: 2px; transition: background .2s; }
+    .btn-next:hover { background: #1a2744; }
+    .btn-next:disabled { opacity: .4; cursor: not-allowed; }
+
+    .card-price-single { font-size: 11px; font-weight: 500; color: #4a5878; letter-spacing: 0.5px; background: #eef0f8; border: 1px solid #c0c8dc; border-radius: 3px; padding: 3px 8px; }
+    .card-price-tiers { display: flex; gap: 4px; flex-wrap: nowrap; justify-content: flex-end; }
+    .card-price-tier { display: flex; flex-direction: column; align-items: center; background: #eef0f8; border: 1px solid #c0c8dc; border-radius: 3px; padding: 3px 7px; }
+    .card-price-tier-label { font-size: 8px; color: #7888a0; letter-spacing: 1px; font-family: 'Cinzel', serif; }
+    .card-price-tier-value { font-size: 11px; font-weight: 500; color: #4a5878; }
+
+    /* ── Bundle Section ── */
+    .bundle-section { background: #f4f6fb; padding: 48px 32px; border-top: 1px solid #c0c8dc; }
+    .bundle-header { text-align: center; margin-bottom: 32px; }
+    .bundle-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 10px; }
+    .bundle-title { font-size: 15px; font-weight: 500; color: #1a2744; font-family: 'Noto Sans TC', sans-serif; }
+    .bundle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 860px; margin: 0 auto; }
+    .bundle-card { background: #ffffff; border: 1px solid #c0c8dc; border-top: 2px solid #C9A84C; border-radius: 4px; padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .bundle-card-title { font-size: 13px; font-weight: 500; color: #1a2744; font-family: 'Noto Sans TC', sans-serif; }
+    .bundle-card-items { display: flex; flex-direction: column; gap: 5px; }
+    .bundle-card-item { font-size: 11px; color: #4a5878; line-height: 1.6; display: flex; gap: 6px; }
+    .bundle-card-item::before { content: '·'; color: #C9A84C; flex-shrink: 0; }
+    .bundle-card-note { font-size: 10px; color: #7888a0; font-style: italic; }
+    .bundle-card-pricing { margin-top: auto; padding-top: 14px; border-top: 1px solid #d0d6e8; }
+    .bundle-card-price { font-size: 15px; font-weight: 500; color: #1a2744; }
+    .bundle-card-save { font-size: 10px; color: #8B6914; margin-top: 2px; }
+    @media (max-width: 600px) { .bundle-grid { grid-template-columns: 1fr; } }
     @media (hover: hover) {
       .card:hover { border-color: #C9A84C99; background: #eef0f8; }
       .card:hover::after { opacity: 1; }
@@ -161,7 +229,7 @@
 <header class="hero">
   <canvas id="starCanvas"></canvas>
   <div class="hero-inner">
-    <p class="shop-label">VBAstroCharts · Your Chart, Your Century</p>
+    <p class="shop-label">VBAstroCharts</p>
     <h1 class="hero-title">個人占星活頁簿</h1>
     <p class="hero-sub">百年星曆・行運週期・量身訂製</p>
     <p class="hero-desc">長期行運、相位週期與人生時間軸整理<span class="desc-break"></span>以 Excel 建立可篩選、可保存的個人占星檔案</p>
@@ -205,6 +273,7 @@
       <div class="card-desc">Jupiter through Pluto — generational cycles across a century.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('外')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$680</div></div>
       </div>
     </div>
 
@@ -215,6 +284,7 @@
       <div class="card-desc">100 years of transits mapped against your natal chart.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('本')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$680</div></div>
       </div>
     </div>
 
@@ -225,6 +295,13 @@
       <div class="card-desc">5 / 10 / 15-year packages. Four interpretive angles in one workbook.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('年')">預覽截圖 ↗</button>
+        <div class="card-price">
+        <div class="card-price-tiers">
+          <div class="card-price-tier"><span class="card-price-tier-label">5Y</span><span class="card-price-tier-value">NT$460</span></div>
+          <div class="card-price-tier"><span class="card-price-tier-label">10Y</span><span class="card-price-tier-value">NT$770</span></div>
+          <div class="card-price-tier"><span class="card-price-tier-label">15Y</span><span class="card-price-tier-value">NT$1,000</span></div>
+        </div>
+      </div>
       </div>
     </div>
 
@@ -247,6 +324,13 @@
       <div class="card-desc">Three interpretive perspectives with dual aspect overlays per return.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('SR')">預覽截圖 ↗</button>
+        <div class="card-price">
+        <div class="card-price-tiers">
+          <div class="card-price-tier"><span class="card-price-tier-label">5Y</span><span class="card-price-tier-value">NT$380</span></div>
+          <div class="card-price-tier"><span class="card-price-tier-label">10Y</span><span class="card-price-tier-value">NT$700</span></div>
+          <div class="card-price-tier"><span class="card-price-tier-label">15Y</span><span class="card-price-tier-value">NT$920</span></div>
+        </div>
+      </div>
       </div>
     </div>
 
@@ -257,6 +341,7 @@
       <div class="card-desc">100 solar return charts with full planetary &amp; cusp data.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('SRDB')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$700</div></div>
       </div>
     </div>
 
@@ -267,6 +352,7 @@
       <div class="card-desc">SR–natal aspect analysis across 100 years in one view.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('SRN')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$610</div></div>
       </div>
     </div>
 
@@ -277,6 +363,7 @@
       <div class="card-desc">Internal SR aspects — conjunctions, harmonics, and challenges.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('SRSR')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$380</div></div>
       </div>
     </div>
 
@@ -299,6 +386,7 @@
       <div class="card-desc">Natal &amp; SR planets in aspect to fixed stars — identify deep-seated themes, talents, and annually activated energies.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('恆')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$460</div></div>
       </div>
     </div>
 
@@ -321,6 +409,58 @@
       <div class="card-desc">100 years of eclipse aspects cross-referenced with natal and solar return charts — identify triggered configurations year by year.</div>
       <div class="card-actions">
         <button class="card-btn" onclick="openLB('Ecli')">預覽截圖 ↗</button>
+        <div class="card-price"><div class="card-price-single">NT$460</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="bundle-section">
+  <div class="bundle-header">
+    <p class="bundle-label">Bundle Pricing · 套組方案</p>
+    <p class="bundle-title">組合購買，享有折扣優惠</p>
+  </div>
+  <div class="bundle-grid">
+
+    <div class="bundle-card">
+      <div class="bundle-card-title">SR 套組</div>
+      <div class="bundle-card-items">
+        <div class="bundle-card-item">太陽回歸三視角雙相位</div>
+        <div class="bundle-card-item">太陽回歸百年資料庫</div>
+        <div class="bundle-card-item">百年太陽回歸 × 本命相位總覽</div>
+        <div class="bundle-card-item">太陽回歸內部相位分析</div>
+      </div>
+      <p class="bundle-card-note">三視角年份方案可自選</p>
+      <div class="bundle-card-pricing">
+        <div class="bundle-card-price">NT$1,900</div>
+        <div class="bundle-card-save">單品合計 NT$2,070　省 NT$170</div>
+      </div>
+    </div>
+
+    <div class="bundle-card">
+      <div class="bundle-card-title">行運套組</div>
+      <div class="bundle-card-items">
+        <div class="bundle-card-item">年度行運四視角甘特圖</div>
+        <div class="bundle-card-item">外行星百年甘特圖</div>
+        <div class="bundle-card-item">本年視角百年甘特圖</div>
+      </div>
+      <p class="bundle-card-note">年度行運年份方案可自選</p>
+      <div class="bundle-card-pricing">
+        <div class="bundle-card-price">NT$1,540</div>
+        <div class="bundle-card-save">單品合計 NT$1,820　省 NT$280</div>
+      </div>
+    </div>
+
+    <div class="bundle-card">
+      <div class="bundle-card-title">分析套組</div>
+      <div class="bundle-card-items">
+        <div class="bundle-card-item">日月食相位分析</div>
+        <div class="bundle-card-item">恆星相位資料庫</div>
+      </div>
+      <div class="bundle-card-pricing">
+        <div class="bundle-card-price">NT$840</div>
+        <div class="bundle-card-save">單品合計 NT$920　省 NT$80</div>
       </div>
     </div>
 
@@ -678,20 +818,43 @@ document.addEventListener('keydown', e => {
     <div class="order-header">
       <div>
         <div class="order-title-en">Place an Order</div>
-        <div class="order-title-zh">填寫出生資料</div>
+        <div class="order-title-zh" id="orderTitleZh">選擇產品</div>
       </div>
       <button class="order-close" onclick="closeOrder()">✕</button>
     </div>
-    <div class="order-body">
+
+    <div class="step-indicator">
+      <div class="step-dot active" id="stepDot1"><div class="step-dot-num">1</div>選擇產品</div>
+      <div class="step-sep"></div>
+      <div class="step-dot" id="stepDot2"><div class="step-dot-num">2</div>填寫資料</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="order-body" id="step1">
+      <div class="form-section-label">選擇品項 · Select Products</div>
+      <div class="prod-list" id="prodList"></div>
+      <div class="bundle-hint" id="bundleHint">
+        <span id="bundleHintText"></span>
+        <button class="bundle-hint-btn" id="bundleHintBtn"></button>
+      </div>
+      <div class="total-bar">
+        <span class="total-label">Total</span>
+        <span class="total-amount" id="totalAmount">NT$0</span>
+      </div>
+      <button class="btn-next" id="btnNext" onclick="goStep2()" disabled>下一步 · Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="order-body" id="step2" style="display:none">
+      <div class="form-section-label">訂單摘要 · Order Summary</div>
+      <div class="order-summary" id="orderSummary"></div>
 
       <div class="form-section-label">Personal Information · 個人資料</div>
-
       <div class="form-group">
         <span class="form-label-en">Name</span>
         <span class="form-label-zh">姓名</span>
         <input class="form-input" id="f_name" type="text" placeholder="您的姓名 / Your name" required>
       </div>
-
       <div class="form-group">
         <span class="form-label-en">Email</span>
         <span class="form-label-zh">電子郵件</span>
@@ -699,19 +862,16 @@ document.addEventListener('keydown', e => {
       </div>
 
       <div class="form-section-label">Birth Data · 出生資料</div>
-
       <div class="form-group">
         <span class="form-label-en">Date of Birth</span>
         <span class="form-label-zh">出生日期</span>
         <input class="form-input" id="f_date" type="date" required>
       </div>
-
       <div class="form-group">
         <span class="form-label-en">Time of Birth</span>
         <span class="form-label-zh">出生時間</span>
         <input class="form-input" id="f_time" type="time" required>
       </div>
-
       <div class="form-row">
         <div class="form-group">
           <span class="form-label-en">City of Birth</span>
@@ -724,34 +884,6 @@ document.addEventListener('keydown', e => {
           <input class="form-input" id="f_country" type="text" placeholder="國家 / Country" required>
         </div>
       </div>
-
-      <div class="form-section-label">Product Selection · 選擇產品</div>
-
-      <div class="form-group">
-        <span class="form-label-en">Product</span>
-        <span class="form-label-zh">產品</span>
-        <select class="form-select" id="f_product" required>
-          <option value="" disabled selected>請選擇產品 / Select a product</option>
-          <optgroup label="行運甘特圖 · Transit Gantt Charts">
-            <option>行運外行星視角 ✦ 百年甘特圖</option>
-            <option>本命視角 ✦ 百年行運甘特圖</option>
-            <option>年度行運 ✦ 四視角甘特圖</option>
-          </optgroup>
-          <optgroup label="太陽回歸系列 · Solar Return Series">
-            <option>太陽回歸 ✦ 三視角雙相位星盤圖</option>
-            <option>太陽回歸 ✦ 百年資料庫</option>
-            <option>百年太陽回歸 × 本命相位總覽</option>
-            <option>太陽回歸 ✦ 相位總覽</option>
-          </optgroup>
-          <optgroup label="恆星相位 · Fixed Star Aspects">
-            <option>恆星相位資料庫</option>
-          </optgroup>
-          <optgroup label="日月食系列 · Eclipse Series">
-            <option>日月食相位分析</option>
-          </optgroup>
-        </select>
-      </div>
-
       <div class="form-group">
         <span class="form-label-en">Notes</span>
         <span class="form-label-zh">備註</span>
@@ -760,15 +892,11 @@ document.addEventListener('keydown', e => {
 
       <div id="formStatus" class="form-status"></div>
 
-      <button class="submit-btn" id="submitBtn" onclick="submitOrder()">
-        送出訂單 · Submit Order
-      </button>
-
-      <p class="form-notice">
-        收到資料後將於 1–2 個工作天內以 Email 回覆確認訂單細節及付款方式。<br>
-        We will reply within 1–2 business days to confirm your order and payment details.
-      </p>
-
+      <div class="step-nav">
+        <button class="btn-back" onclick="goStep1()">← 返回</button>
+        <button class="submit-btn" id="submitBtn" onclick="submitOrder()" style="flex:2">送出訂單 · Submit Order</button>
+      </div>
+      <p class="form-notice">收到資料後將於 1–2 個工作天內以 Email 回覆確認訂單細節及付款方式。<br>We will reply within 1–2 business days to confirm your order and payment details.</p>
     </div>
   </div>
 </div>
@@ -779,12 +907,185 @@ const EMAILJS_PUBLIC_KEY  = '_Di9App3wWghrO_wY';
 const EMAILJS_SERVICE_ID  = 'service_13hujnr';
 const EMAILJS_TMPL_OWNER  = 'template_wp4i0yg';
 const EMAILJS_TMPL_CLIENT = 'template_5s4mxn9';
-
 emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
+/* ── Product & Bundle Data ── */
+const ORDER_PRODUCTS = [
+  { id:'P6', name:'外行星百年甘特圖',         price:680,  bundles:['B2'] },
+  { id:'P7', name:'本年視角百年甘特圖',        price:680,  bundles:['B2'] },
+  { id:'P1', name:'年度行運 ✦ 四視角甘特圖',   bundles:['B2'],
+    tiers:[{label:'5Y',price:460},{label:'10Y',price:770},{label:'15Y',price:1000}] },
+  { id:'P2', name:'太陽回歸 ✦ 三視角雙相位',   bundles:['B1'],
+    tiers:[{label:'5Y',price:380},{label:'10Y',price:700},{label:'15Y',price:920}] },
+  { id:'P3', name:'太陽回歸 ✦ 百年資料庫',     price:700,  bundles:['B1'] },
+  { id:'P4', name:'百年太陽回歸 × 本命相位總覽', price:610, bundles:['B1'] },
+  { id:'P8', name:'太陽回歸 ✦ 相位總覽',       price:380,  bundles:['B1'] },
+  { id:'P9', name:'恆星相位資料庫',             price:460,  bundles:['B3'] },
+  { id:'P5', name:'日月食相位分析',             price:460,  bundles:['B3'] },
+];
+const BUNDLES = {
+  B1:{ name:'SR 套組',   ids:['P2','P3','P4','P8'], price:1900, saving:170 },
+  B2:{ name:'行運套組',  ids:['P1','P6','P7'],       price:1540, saving:280 },
+  B3:{ name:'分析套組',  ids:['P5','P9'],             price:840,  saving:80  },
+};
+
+/* ── State ── */
+const sel = {};   // { pid: { selected, tierIdx } }
+ORDER_PRODUCTS.forEach(p => sel[p.id] = { selected:false, tierIdx: p.tiers ? 0 : null });
+
+/* ── Build product list ── */
+function buildProdList() {
+  const list = document.getElementById('prodList');
+  list.innerHTML = '';
+  ORDER_PRODUCTS.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'prod-item';
+    item.id = 'prod-' + p.id;
+
+    const priceTag = p.tiers
+      ? `<span class="prod-price-tag">${p.tiers[0].price.toLocaleString()}起</span>`
+      : `<span class="prod-price-tag">NT$${p.price.toLocaleString()}</span>`;
+
+    item.innerHTML = `
+      <div class="prod-item-row" onclick="toggleProd('${p.id}')">
+        <div class="prod-check"><span class="prod-check-icon">✓</span></div>
+        <div class="prod-name">${p.name}</div>
+        ${priceTag}
+      </div>`;
+
+    if (p.tiers) {
+      const tiersDiv = document.createElement('div');
+      tiersDiv.className = 'prod-tiers';
+      tiersDiv.id = 'tiers-' + p.id;
+      tiersDiv.style.display = 'none';
+      p.tiers.forEach((t, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'prod-tier-btn' + (i === 0 ? ' selected' : '');
+        btn.innerHTML = `<span class="prod-tier-label">${t.label}</span>NT$${t.price.toLocaleString()}`;
+        btn.onclick = (e) => { e.stopPropagation(); selectTier(p.id, i); };
+        tiersDiv.appendChild(btn);
+      });
+      item.appendChild(tiersDiv);
+    }
+    list.appendChild(item);
+  });
+}
+
+function toggleProd(pid) {
+  sel[pid].selected = !sel[pid].selected;
+  const item = document.getElementById('prod-' + pid);
+  item.classList.toggle('selected', sel[pid].selected);
+  const tiersDiv = document.getElementById('tiers-' + pid);
+  if (tiersDiv) tiersDiv.style.display = sel[pid].selected ? 'flex' : 'none';
+  updateTotal();
+}
+
+function selectTier(pid, idx) {
+  sel[pid].tierIdx = idx;
+  const tiersDiv = document.getElementById('tiers-' + pid);
+  tiersDiv.querySelectorAll('.prod-tier-btn').forEach((b, i) => b.classList.toggle('selected', i === idx));
+  updateTotal();
+}
+
+function getPrice(pid) {
+  const p = ORDER_PRODUCTS.find(x => x.id === pid);
+  if (!p) return 0;
+  if (p.tiers) return p.tiers[sel[pid].tierIdx].price;
+  return p.price;
+}
+
+function updateTotal() {
+  let total = 0;
+  const selectedIds = ORDER_PRODUCTS.filter(p => sel[p.id].selected).map(p => p.id);
+  selectedIds.forEach(pid => total += getPrice(pid));
+  document.getElementById('totalAmount').textContent = 'NT$' + total.toLocaleString();
+  document.getElementById('btnNext').disabled = selectedIds.length === 0;
+
+  // Bundle hint
+  const hint = document.getElementById('bundleHint');
+  let hintShown = false;
+  for (const [bid, b] of Object.entries(BUNDLES)) {
+    const has = b.ids.filter(id => selectedIds.includes(id));
+    const missing = b.ids.filter(id => !selectedIds.includes(id));
+    if (has.length >= 2 && missing.length > 0) {
+      const individualTotal = b.ids.reduce((s, id) => s + getPrice(id), 0);
+      if (individualTotal > b.price) {
+        document.getElementById('bundleHintText').textContent =
+          `您已選擇 ${b.name} 中的 ${has.length} 項，切換為套組可省 NT$${b.saving.toLocaleString()}`;
+        document.getElementById('bundleHintBtn').textContent = `切換為${b.name}（NT$${b.price.toLocaleString()}）`;
+        document.getElementById('bundleHintBtn').onclick = () => switchBundle(bid);
+        hint.classList.add('show');
+        hintShown = true;
+        break;
+      }
+    }
+    // All selected = full bundle
+    if (has.length === b.ids.length) {
+      const individualTotal = b.ids.reduce((s, id) => s + getPrice(id), 0);
+      if (individualTotal > b.price) {
+        document.getElementById('bundleHintText').textContent =
+          `已選${b.name}全部品項，套組優惠價 NT$${b.price.toLocaleString()}（省 NT$${b.saving.toLocaleString()}）`;
+        document.getElementById('bundleHintBtn').textContent = '';
+        hint.classList.add('show');
+        hintShown = true;
+        break;
+      }
+    }
+  }
+  if (!hintShown) hint.classList.remove('show');
+}
+
+function switchBundle(bid) {
+  const b = BUNDLES[bid];
+  b.ids.forEach(pid => {
+    if (!sel[pid].selected) { sel[pid].selected = true; }
+    const item = document.getElementById('prod-' + pid);
+    item.classList.add('selected');
+    const tiersDiv = document.getElementById('tiers-' + pid);
+    if (tiersDiv) tiersDiv.style.display = 'flex';
+  });
+  updateTotal();
+}
+
+function goStep2() {
+  const selectedProds = ORDER_PRODUCTS.filter(p => sel[p.id].selected);
+  if (selectedProds.length === 0) return;
+
+  // Build summary
+  const summary = document.getElementById('orderSummary');
+  let total = 0;
+  let summaryHtml = '';
+  selectedProds.forEach(p => {
+    const price = getPrice(p.id);
+    total += price;
+    let label = p.name;
+    if (p.tiers) label += ` (${p.tiers[sel[p.id].tierIdx].label})`;
+    summaryHtml += `<div class="order-summary-item"><span>${label}</span><span>NT$${price.toLocaleString()}</span></div>`;
+  });
+  summaryHtml += `<div class="order-summary-total"><span>合計 Total</span><span>NT$${total.toLocaleString()}</span></div>`;
+  summary.innerHTML = summaryHtml;
+
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'flex';
+  document.getElementById('stepDot1').classList.remove('active');
+  document.getElementById('stepDot2').classList.add('active');
+  document.getElementById('orderTitleZh').textContent = '填寫資料';
+  document.querySelector('.order-modal').scrollTop = 0;
+}
+
+function goStep1() {
+  document.getElementById('step1').style.display = 'flex';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('stepDot1').classList.add('active');
+  document.getElementById('stepDot2').classList.remove('active');
+  document.getElementById('orderTitleZh').textContent = '選擇產品';
+}
+
 function openOrder() {
+  buildProdList();
   document.getElementById('orderOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
+  goStep1();
 }
 function closeOrder() {
   document.getElementById('orderOverlay').classList.remove('active');
@@ -803,20 +1104,30 @@ async function submitOrder() {
   const time    = document.getElementById('f_time').value;
   const city    = document.getElementById('f_city').value.trim();
   const country = document.getElementById('f_country').value.trim();
-  const place   = city + ', ' + country;
-  const product = document.getElementById('f_product').value;
   const notes   = document.getElementById('f_notes').value.trim() || '—';
 
-  if (!name || !email || !date || !time || !city || !country || !product) {
+  if (!name || !email || !date || !time || !city || !country) {
     status.className = 'form-status error';
     status.textContent = '請填寫所有必填欄位。/ Please fill in all required fields.';
     return;
   }
+
+  const selectedProds = ORDER_PRODUCTS.filter(p => sel[p.id].selected);
+  let total = 0;
+  const productLines = selectedProds.map(p => {
+    const price = getPrice(p.id);
+    total += price;
+    let label = p.name;
+    if (p.tiers) label += ` (${p.tiers[sel[p.id].tierIdx].label})`;
+    return `${label}：NT$${price.toLocaleString()}`;
+  });
+  const product = productLines.join('\n') + `\n合計：NT$${total.toLocaleString()}`;
+
   btn.disabled = true;
   btn.textContent = '傳送中… / Sending…';
   status.className = 'form-status';
 
-  const params = { name, email, date, time, place, product, notes };
+  const params = { name, email, date, time, place: city + ', ' + country, product, notes };
   try {
     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_OWNER,  params);
     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_CLIENT, params);
@@ -831,13 +1142,14 @@ async function submitOrder() {
     console.error('EmailJS error:', err);
   }
 }
-  // Mobile card tap highlight
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-    });
+
+// Mobile card tap highlight
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
   });
+});
 </script>
 </body>
 </html>
