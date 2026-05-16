@@ -1,0 +1,138 @@
+<!--
+═══════════════════════════════════════════════════════════════
+  EmailJS Template — OWNER NOTIFICATION
+  Template ID: template_vqpawek
+  Purpose: 寄給自己 (Chen) 的新訂單通知
+
+  ▼ 在 EmailJS 後台需要設定:
+    Subject:  【VBAstroCharts】新訂單 · {{name}} — {{total}}
+    To Email: vbastrocharts@gmail.com  (你自己收件)
+    From Name: VBAstroCharts Orders
+    Reply To: {{email}}                (按回覆就直接回給客戶)
+
+  ▼ 以下整段貼到 Content (HTML 模式)
+═══════════════════════════════════════════════════════════════
+-->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#EBEEF5; padding:24px 0; font-family:'Microsoft JhengHei','PingFang TC','Helvetica Neue',Arial,sans-serif; color:#1a2340;">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; background-color:#f4f6fb; border:1px solid #c0c8dc; border-radius:4px;">
+
+        <!-- Header -->
+        <tr>
+          <td style="background-color:#1A2744; padding:24px 28px; border-bottom:2px solid #C9A84C;">
+            <div style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:11px; letter-spacing:3px; text-transform:uppercase; margin-bottom:6px;">VBAstroCharts &middot; New Order</div>
+            <div style="color:#f0e8d8; font-size:18px; font-weight:500;">收到新訂單</div>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:28px;">
+
+            <!-- Customer -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Customer &middot; 客戶</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:10px;">
+                  <table width="100%" cellpadding="4" cellspacing="0" border="0" style="font-size:13px;">
+                    <tr>
+                      <td width="90" style="color:#5a6580;">姓名 Name</td>
+                      <td style="color:#1e2d4a;">{{name}}</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#5a6580;">Email</td>
+                      <td><a href="mailto:{{email}}" style="color:#2E4080; text-decoration:none;">{{email}}</a></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Birth Data -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Birth Data &middot; 出生資料</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:10px;">
+                  <table width="100%" cellpadding="4" cellspacing="0" border="0" style="font-size:13px;">
+                    <tr>
+                      <td width="90" style="color:#5a6580;">日期 Date</td>
+                      <td style="color:#1e2d4a;">{{date}}</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#5a6580;">時間 Time</td>
+                      <td style="color:#1e2d4a;">{{time}}</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#5a6580;">地點 Place</td>
+                      <td style="color:#1e2d4a;">{{place}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Order Items -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:18px;">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Order Items &middot; 商品明細 &middot; 含單價</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:12px;">
+                  <div style="font-size:13px; color:#1e2d4a; line-height:1.9; white-space:pre-line;">{{product}}</div>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Total -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="background-color:#1A2744; padding:16px 20px; border-radius:3px;">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:11px; letter-spacing:2.5px; text-transform:uppercase;">Total &middot; 總計</td>
+                      <td align="right" style="color:#C9A84C; font-size:18px; font-weight:500; letter-spacing:0.5px;">{{total}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Notes -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Notes &middot; 備註</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:10px;">
+                  <div style="font-size:13px; color:#1e2d4a; line-height:1.8; white-space:pre-line;">{{notes}}</div>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background-color:#1A2744; padding:14px 28px; text-align:center;">
+            <div style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:3px;">VBASTROCHARTS</div>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,143 @@
+<!--
+═══════════════════════════════════════════════════════════════
+  EmailJS Template — CLIENT CONFIRMATION
+  Template ID: template_h5qzuxi
+  Purpose: 寄給客戶的訂單確認信
+
+  ▼ 在 EmailJS 後台需要設定:
+    Subject:  【VBAstroCharts】訂單已收到 · Order Received
+    To Email: {{email}}                  (寄給客戶)
+    From Name: VBAstroCharts
+    Reply To: vbastrocharts@gmail.com    (客戶回覆給你)
+
+  ▼ 以下整段貼到 Content (HTML 模式)
+═══════════════════════════════════════════════════════════════
+-->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#EBEEF5; padding:24px 0; font-family:'Microsoft JhengHei','PingFang TC','Helvetica Neue',Arial,sans-serif; color:#1a2340;">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; background-color:#f4f6fb; border:1px solid #c0c8dc; border-radius:4px;">
+
+        <!-- Header -->
+        <tr>
+          <td style="background-color:#1A2744; padding:28px 28px 22px; border-bottom:2px solid #C9A84C; text-align:center;">
+            <div style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:11px; letter-spacing:3.5px; text-transform:uppercase; margin-bottom:14px;">VBASTROCHARTS</div>
+            <div style="color:#f0e8d8; font-size:20px; font-weight:500; margin-bottom:6px;">訂單已收到</div>
+            <div style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:11px; letter-spacing:1.5px; opacity:0.7;">Order Received</div>
+          </td>
+        </tr>
+
+        <!-- Greeting -->
+        <tr>
+          <td style="padding:28px 28px 4px;">
+            <p style="font-size:14px; color:#1a2340; line-height:1.8; margin:0 0 14px;">{{name}} 您好,</p>
+            <p style="font-size:13px; color:#1e2d4a; line-height:1.9; margin:0 0 10px;">
+              感謝您的訂購。我們已收到您的訂單資料,將於 <strong style="color:#1A2744;">1–2 個工作天內</strong> 以 Email 回覆,確認訂單細節並提供付款方式。
+            </p>
+            <p style="font-size:12px; color:#5a6580; line-height:1.8; margin:0; font-style:italic;">
+              Thank you for your order. We have received your details and will reply within <strong>1–2 business days</strong> to confirm the order and provide payment instructions.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:22px 28px 28px;">
+
+            <!-- Birth Data -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Your Birth Data &middot; 出生資料</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:10px;">
+                  <table width="100%" cellpadding="4" cellspacing="0" border="0" style="font-size:13px;">
+                    <tr>
+                      <td width="90" style="color:#5a6580;">日期 Date</td>
+                      <td style="color:#1e2d4a;">{{date}}</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#5a6580;">時間 Time</td>
+                      <td style="color:#1e2d4a;">{{time}}</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#5a6580;">地點 Place</td>
+                      <td style="color:#1e2d4a;">{{place}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Order Items -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:18px;">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Order Items &middot; 商品明細 &middot; 含單價</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:12px;">
+                  <div style="font-size:13px; color:#1e2d4a; line-height:1.9; white-space:pre-line;">{{product}}</div>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Total -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="background-color:#1A2744; padding:16px 20px; border-radius:3px;">
+                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:11px; letter-spacing:2.5px; text-transform:uppercase;">Total &middot; 總計</td>
+                      <td align="right" style="color:#C9A84C; font-size:18px; font-weight:500; letter-spacing:0.5px;">{{total}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Your Notes -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="border-bottom:1px solid #c0c8dc; padding-bottom:6px;">
+                  <span style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:2.5px; text-transform:uppercase;">Your Notes &middot; 您的備註</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top:10px;">
+                  <div style="font-size:13px; color:#1e2d4a; line-height:1.8; white-space:pre-line;">{{notes}}</div>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- Closing -->
+        <tr>
+          <td style="padding:0 28px 28px;">
+            <p style="font-size:13px; color:#1e2d4a; line-height:1.9; margin:0 0 6px;">
+              若有任何問題,歡迎直接回覆此封 Email。
+            </p>
+            <p style="font-size:12px; color:#5a6580; line-height:1.7; margin:0; font-style:italic;">
+              If you have any questions, simply reply to this email.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background-color:#1A2744; padding:20px 28px; text-align:center;">
+            <div style="font-family:'Cinzel',Georgia,serif; color:#C9A84C; font-size:10px; letter-spacing:3.5px; margin-bottom:6px;">VBASTROCHARTS</div>
+            <div style="color:#8a96b0; font-size:10px; letter-spacing:1.2px; margin-bottom:12px;">Your Chart &middot; Your Century</div>
+            <a href="mailto:vbastrocharts@gmail.com" style="color:#C9A84C; font-size:11px; text-decoration:none; letter-spacing:0.5px;">vbastrocharts@gmail.com</a>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>

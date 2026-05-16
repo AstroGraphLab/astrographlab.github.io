@@ -330,7 +330,7 @@
   <div class="hero-inner">
     <h1 class="hero-title">個人占星活頁簿</h1>
     <p class="hero-sub">百年星曆・行運週期・量身訂製</p>
-    <p class="hero-desc">長期行運、相位週期與人生時間軸整理<span class="desc-break"></span>以 Excel 建立可篩選、可保存的個人占星檔案</p>
+    <p class="hero-desc">長期行運、相位週期與人生時間軸整理，<span class="desc-break"></span>以 Excel 建立可篩選、可保存的個人占星檔案</p>
   </div>
 </header>
 
@@ -428,7 +428,7 @@
           <div class="card-price-tier"><span class="card-price-tier-label">10Y</span><span class="card-price-tier-value">NT$380</span></div>
           <div class="card-price-tier"><span class="card-price-tier-label">20Y</span><span class="card-price-tier-value">NT$580</span></div>
           <div class="card-price-tier"><span class="card-price-tier-label">50Y</span><span class="card-price-tier-value">NT$920</span></div>
-          <div class="card-price-tier"><span class="card-price-tier-label">99Y</span><span class="card-price-tier-value">NT$1,200</span></div>
+          <div class="card-price-tier"><span class="card-price-tier-label">100Y</span><span class="card-price-tier-value">NT$1,200</span></div>
         </div>
       </div>
       </div>
@@ -628,7 +628,7 @@
 
 <section class="contact-section" id="contact">
   <p class="contact-label">Contact · 聯絡我們</p>
-  <p class="contact-email"><a href="mailto:vbastrocharts@gmail.com">vbastrocharts@gmail.com</a></p>
+  <p class="contact-email"><a href="mailto:info@vbastrocharts.com">info@vbastrocharts.com</a></p>
 </section>
 
 <footer>
@@ -1063,10 +1063,10 @@ document.addEventListener('keydown', e => {
 
 <script>
 /* ── EmailJS ── */
-const EMAILJS_PUBLIC_KEY  = '_Di9App3wWghrO_wY';
-const EMAILJS_SERVICE_ID  = 'service_13hujnr';
-const EMAILJS_TMPL_OWNER  = 'template_wp4i0yg';
-const EMAILJS_TMPL_CLIENT = 'template_5s4mxn9';
+const EMAILJS_PUBLIC_KEY  = '6zteUithXdvtFVQL8';
+const EMAILJS_SERVICE_ID  = 'service_6qv5t74';
+const EMAILJS_TMPL_OWNER  = 'template_vqpawek';
+const EMAILJS_TMPL_CLIENT = 'template_h5qzuxi';
 emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
 /* ── Product & Bundle Data ── */
@@ -1076,7 +1076,7 @@ const ORDER_PRODUCTS = [
   { id:'P1', name:'年度行運 ✦ 四視角甘特圖',   bundles:['B2'],
     tiers:[{label:'5Y',price:460},{label:'10Y',price:770},{label:'15Y',price:1000}] },
   { id:'P2', name:'太陽回歸 ✦ 三視角雙相位',   bundles:['B1'],
-    tiers:[{label:'10Y',price:380},{label:'20Y',price:580},{label:'50Y',price:920},{label:'99Y',price:1200}] },
+    tiers:[{label:'10Y',price:380},{label:'20Y',price:580},{label:'50Y',price:920},{label:'100Y',price:1200}] },
   { id:'P3', name:'太陽回歸 ✦ 百年資料庫',     price:700,  bundles:['B1'] },
   { id:'P4', name:'百年太陽回歸 × 本命相位總覽', price:460, bundles:['B1'] },
   { id:'P8', name:'太陽回歸 ✦ 相位總覽',       price:380,  bundles:['B1'] },
@@ -1279,13 +1279,14 @@ async function submitOrder() {
     if (p.tiers) label += ` (${p.tiers[sel[p.id].tierIdx].label})`;
     return `${label}：NT$${price.toLocaleString()}`;
   });
-  const product = productLines.join('\n') + `\n合計：NT$${total.toLocaleString()}`;
+  const product = productLines.join('\n');
+  const totalStr = `NT$${total.toLocaleString()}`;
 
   btn.disabled = true;
   btn.textContent = '傳送中… / Sending…';
   status.className = 'form-status';
 
-  const params = { name, email, date, time, place: city + ', ' + country, product, notes };
+  const params = { name, email, date, time, place: city + ', ' + country, product, total: totalStr, notes };
   try {
     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_OWNER,  params);
     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TMPL_CLIENT, params);
