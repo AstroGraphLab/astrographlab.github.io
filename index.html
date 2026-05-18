@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VBAstroCharts — 個人占星活頁簿</title>
+  <meta name="description"        content="百年星曆・行運週期・量身訂製。以 Excel 建立可篩選、可保存的個人占星檔案。">
+  <meta property="og:title"       content="VBAstroCharts — 個人占星活頁簿">
+  <meta property="og:description" content="百年星曆・行運週期・量身訂製。以 Excel 建立可篩選、可保存的個人占星檔案。">
+  <meta property="og:image"       content="https://vbastrocharts.com/og-image.jpg">
+  <meta property="og:url"         content="https://vbastrocharts.com">
+  <meta property="og:type"        content="website">
+  <meta name="twitter:card"       content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -147,6 +154,16 @@
     .faq-a { display: none; padding: 0 4px 16px; font-size: 13px; color: #4a5878; line-height: 1.85; }
     .faq-item.open .faq-a { display: block; }
 
+    /* ── About ── */
+    .about-section { background: #0b1020; padding: 56px 32px; border-top: 1px solid #C9A84C33; }
+    .about-inner { max-width: 600px; margin: 0 auto; }
+    .about-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; text-align: center; margin-bottom: 32px; opacity: .85; }
+    .about-text { font-size: 15px; line-height: 2.05; color: #c8cfe8; text-align: justify; margin-bottom: 18px; }
+    .about-text:last-child { margin-bottom: 0; }
+    .about-sig { margin-top: 32px; padding-top: 24px; border-top: 1px solid #C9A84C33; display: flex; align-items: center; gap: 14px; }
+    .about-sig-line { flex: 1; height: 1px; background: #C9A84C22; }
+    .about-sig-text { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: #C9A84C88; white-space: nowrap; }
+
     /* ── Contact ── */
     .contact-section { background: #f4f6fb; padding: 36px 32px; border-top: 1px solid #c0c8dc; text-align: center; }
     .contact-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: #C9A84C; text-transform: uppercase; margin-bottom: 12px; }
@@ -154,9 +171,31 @@
     .contact-email a { color: #1e2d4a; text-decoration: none; border-bottom: 1px solid #c0c8dc; transition: border-color .2s; }
     .contact-email a:hover { border-color: #C9A84C; }
 
-    footer { background: #dde2ee; border-top: 1px solid #b0b8d0; padding: 32px; text-align: center; }
+    footer { background: #dde2ee; border-top: 1px solid #b0b8d0; padding: 28px 32px; text-align: center; }
     .footer-brand { font-family: 'Cinzel', serif; font-size: 13px; color: #8B6914; margin-bottom: 8px; letter-spacing: 2px; }
-    .footer-note  { font-size: 11px; color: #8898b8; letter-spacing: 1px; }
+    .footer-note  { font-size: 11px; color: #8898b8; letter-spacing: 1px; margin-bottom: 14px; }
+    .footer-links { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px; }
+    .footer-link  { font-size: 11px; color: #7888a0; text-decoration: none; border: none; border-bottom: 1px solid transparent; cursor: pointer; padding: 0; font-family: 'Noto Sans TC', sans-serif; background: none; transition: color .2s, border-color .2s; }
+    .footer-link:hover { color: #8B6914; border-bottom-color: #C9A84C88; }
+    .footer-sep   { font-size: 10px; color: #b0b8d0; }
+    .footer-copy  { font-size: 10px; color: #a0aac0; letter-spacing: 0.5px; }
+
+    /* ── Privacy Modal ── */
+    .privacy-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1100; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 16px; }
+    .privacy-overlay.active { display: flex; }
+    .privacy-modal { background: #f4f6fb; border: 1px solid #c0c8dc; border-radius: 4px; width: 100%; max-width: 560px; max-height: 88vh; overflow: hidden; display: flex; flex-direction: column; }
+    .privacy-header { padding: 18px 24px 14px; border-bottom: 1px solid #c0c8dc; display: flex; align-items: flex-start; justify-content: space-between; flex-shrink: 0; }
+    .privacy-title-en { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2.5px; color: #8B6914; text-transform: uppercase; }
+    .privacy-title-zh { font-size: 17px; color: #1e2d4a; margin-top: 4px; font-weight: 500; font-family: 'Noto Sans TC', sans-serif; }
+    .privacy-close { width: 28px; height: 28px; border: 1px solid #c0c8dc; border-radius: 2px; color: #4a5878; font-size: 16px; cursor: pointer; background: transparent; display: flex; align-items: center; justify-content: center; transition: border-color .2s, color .2s; flex-shrink: 0; }
+    .privacy-close:hover { border-color: #C9A84C; color: #8B6914; }
+    .privacy-body { padding: 24px; overflow-y: auto; flex: 1; }
+    .privacy-section { margin-bottom: 22px; }
+    .privacy-section:last-child { margin-bottom: 0; }
+    .privacy-section-title { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2.5px; color: #C9A84C; text-transform: uppercase; margin-bottom: 10px; }
+    .privacy-section-text { font-size: 13px; line-height: 1.9; color: #2a3a5a; }
+    .privacy-section-text + .privacy-section-text { margin-top: 8px; }
+    .privacy-updated { font-size: 11px; color: #8898b8; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e0e4ee; }
 
     .navbar { position: sticky; top: 0; z-index: 800; background: #0b1020; border-bottom: 1px solid #C9A84C33; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 52px; }
     .nav-logo { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: #C9A84C; text-decoration: none; white-space: nowrap; }
@@ -205,6 +244,11 @@
     .submit-btn:hover:not(:disabled) { background: #1a2744; }
     .submit-btn:disabled { opacity: .5; cursor: not-allowed; }
     .form-notice { font-size: 12px; color: #8898b8; line-height: 1.7; text-align: center; }
+    .order-flow { display: flex; align-items: flex-start; justify-content: center; gap: 0; margin-bottom: 4px; }
+    .order-flow-step { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .order-flow-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #C9A84C88; background: #fdf8ee; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 10px; color: #8B6914; flex-shrink: 0; margin-bottom: 8px; }
+    .order-flow-label { font-family: 'Noto Sans TC', sans-serif; font-size: 10px; color: #4a5878; line-height: 1.55; text-align: center; padding: 0 2px; }
+    .order-flow-arrow { padding-top: 13px; font-size: 11px; color: #C9A84C88; flex-shrink: 0; }
     .form-status { display: none; padding: 14px 16px; border-radius: 2px; font-size: 13px; line-height: 1.7; text-align: center; }
     .form-status.success { display: block; background: #eef6ee; border: 1px solid #a8cca8; color: #2a5a2a; }
     .form-status.error   { display: block; background: #fdf0f0; border: 1px solid #d4a0a0; color: #6a2020; }
@@ -305,6 +349,7 @@
     </div>
     <a class="nav-link" href="#bundle">套組</a>
     <a class="nav-link" href="#faq">FAQ</a>
+    <a class="nav-link" href="#about">關於</a>
     <a class="nav-link" href="#contact">聯絡</a>
     <button class="nav-order-btn" onclick="openOrder()">開始製作</button>
   </div>
@@ -321,6 +366,7 @@
   <div class="nav-mobile-divider"></div>
   <a class="nav-mobile-item" href="#bundle" onclick="closeMobileMenu()">套組方案</a>
   <a class="nav-mobile-item" href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a class="nav-mobile-item" href="#about" onclick="closeMobileMenu()">關於製作者</a>
   <a class="nav-mobile-item" href="#contact" onclick="closeMobileMenu()">聯絡我們</a>
   <button class="nav-mobile-order" onclick="closeMobileMenu(); openOrder()">開始製作</button>
 </div>
@@ -623,6 +669,55 @@
       <div class="faq-a">所有產品對出生時間的精確度要求較高，時間不確定者請勿下單。</div>
     </div>
 
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        填寫的出生資料有誤，可以更換嗎？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">如發現出生資料填寫有誤，可於收到檔案後 7 天內來信提出更正申請，每筆訂單限一次。更正後需重新製作，請預留 1–2 個工作天。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        檔案遺失了，可以重新取得嗎？檔案會更新嗎？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">如不慎遺失檔案，歡迎來信告知訂單資訊，可申請補寄，不限次數。目前所有產品均為一次性製作的個人化檔案，不提供後續版本更新。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Excel 需要啟用巨集嗎？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">不需要。所有產品均為純 Excel 格式（.xlsx），不含 VBA 巨集，開啟即可正常使用，無需調整任何安全性設定。</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        確認信或檔案 Email 沒有收到怎麼辦？
+        <span class="faq-q-icon">+</span>
+      </button>
+      <div class="faq-a">請先檢查垃圾郵件或促銷信件夾，系統信件有時會被自動分類。若仍未收到，歡迎來信 info@vbastrocharts.com 告知，我們將盡快確認並補寄。</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <p class="about-label">About · 關於製作者</p>
+    <p class="about-text">歡迎來到 VBAstroCharts。</p>
+    <p class="about-text">我是一位製作客製化占星檔案的設計者，長期以 Excel VBA 與天文曆資料為基礎，親自計算並整理每一份星盤資訊。</p>
+    <p class="about-text">隨著年歲增長，我愈來愈相信：一份作品真正能留下來的原因，是它清楚、耐看、實用——能在人生不同階段重新翻閱時，依然讓人感到可靠。</p>
+    <p class="about-text">我喜歡整理資料，也喜歡從複雜的資訊中梳理出脈絡。因此，這裡的每一份占星檔案，不只是計算結果的輸出，更包含了版面配置、閱讀順序與內容邏輯的細心調整。我希望它不只資訊完整，也讓人閱讀時感到清楚、舒服，並願意長久保存。</p>
+    <p class="about-text">對我而言，占星不只是解讀星盤，更像是一種理解人生節奏、回顧生命歷程的方式。</p>
+    <p class="about-text">希望我的作品，能成為你手邊一份清晰而溫暖的陪伴。</p>
+    <div class="about-sig">
+      <div class="about-sig-line"></div>
+      <span class="about-sig-text">VBAstroCharts</span>
+      <div class="about-sig-line"></div>
+    </div>
   </div>
 </section>
 
@@ -634,7 +729,50 @@
 <footer>
   <p class="footer-brand">VBAstroCharts</p>
   <p class="footer-note">Excel · VBA · Western Astrology · Placidus · Tropical</p>
+  <div class="footer-links">
+    <button class="footer-link" onclick="openPrivacy()">隱私政策</button>
+  </div>
+  <p class="footer-copy">&copy; 2025 VBAstroCharts. All rights reserved.</p>
 </footer>
+
+<!-- Privacy Policy Modal -->
+<div class="privacy-overlay" id="privacyOverlay" onclick="handlePrivacyOverlayClick(event)">
+  <div class="privacy-modal">
+    <div class="privacy-header">
+      <div>
+        <div class="privacy-title-en">Privacy Policy</div>
+        <div class="privacy-title-zh">隱私政策</div>
+      </div>
+      <button class="privacy-close" onclick="closePrivacy()">&#x2715;</button>
+    </div>
+    <div class="privacy-body">
+
+      <div class="privacy-section">
+        <p class="privacy-section-title">我們收集哪些資料</p>
+        <p class="privacy-section-text">您在下單時所提供的個人資料，包含：姓名、電子郵件地址，以及製作占星檔案所需的出生日期、出生時間與出生地點。</p>
+      </div>
+
+      <div class="privacy-section">
+        <p class="privacy-section-title">資料的用途</p>
+        <p class="privacy-section-text">您的個人資料僅用於以下目的：製作您的個人化占星 Excel 檔案、以電子郵件寄送成品與訂單確認，以及在必要時與您聯繫（例如確認訂單細節或補寄檔案）。</p>
+      </div>
+
+      <div class="privacy-section">
+        <p class="privacy-section-title">資料的保存與保護</p>
+        <p class="privacy-section-text">您的出生資料與聯絡資訊僅由 VBAstroCharts 製作者個人持有，不會出售、出租或以任何形式提供給第三方。</p>
+        <p class="privacy-section-text">本站使用 EmailJS 處理訂單表單的電子郵件傳送，相關服務請參閱 EmailJS 的隱私政策。</p>
+      </div>
+
+      <div class="privacy-section">
+        <p class="privacy-section-title">您的權利</p>
+        <p class="privacy-section-text">您可隨時來信 <a href="mailto:info@vbastrocharts.com" style="color:#8B6914; text-decoration:none; border-bottom: 1px solid #C9A84C88;">info@vbastrocharts.com</a> 要求查詢、更正或刪除您的個人資料。</p>
+      </div>
+
+      <p class="privacy-updated">最後更新：2025 年</p>
+
+    </div>
+  </div>
+</div>
 
 <!-- Lightbox -->
 <div class="lb-overlay" id="lbOverlay" onclick="handleOverlayClick(event)">
@@ -1056,7 +1194,28 @@ document.addEventListener('keydown', e => {
         <button class="btn-back" onclick="goStep1()">← 返回</button>
         <button class="submit-btn" id="submitBtn" onclick="submitOrder()" style="flex:2">送出訂單 · Submit Order</button>
       </div>
-      <p class="form-notice">收到資料後將於 1–2 個工作天內以 Email 回覆確認訂單細節及付款方式。<br>We will reply within 1–2 business days to confirm your order and payment details.</p>
+      <div class="order-flow">
+        <div class="order-flow-step">
+          <div class="order-flow-dot">1</div>
+          <div class="order-flow-label">送出訂單<br>填寫出生資料</div>
+        </div>
+        <div class="order-flow-arrow">›</div>
+        <div class="order-flow-step">
+          <div class="order-flow-dot">2</div>
+          <div class="order-flow-label">收到回覆信<br>含轉帳帳號</div>
+        </div>
+        <div class="order-flow-arrow">›</div>
+        <div class="order-flow-step">
+          <div class="order-flow-dot">3</div>
+          <div class="order-flow-label">完成轉帳<br>開始製作</div>
+        </div>
+        <div class="order-flow-arrow">›</div>
+        <div class="order-flow-step">
+          <div class="order-flow-dot">4</div>
+          <div class="order-flow-label">製作完成<br>寄送檔案</div>
+        </div>
+      </div>
+      <p class="form-notice">回覆確認信將於 1–2 個工作天內寄出，付款方式為銀行轉帳。</p>
     </div>
   </div>
 </div>
@@ -1315,6 +1474,18 @@ function toggleFaq(btn) {
   const isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
+}
+
+function openPrivacy() {
+  document.getElementById('privacyOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closePrivacy() {
+  document.getElementById('privacyOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function handlePrivacyOverlayClick(e) {
+  if (e.target === document.getElementById('privacyOverlay')) closePrivacy();
 }
 
 function toggleMobileMenu() {
